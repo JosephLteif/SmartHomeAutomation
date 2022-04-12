@@ -2,12 +2,14 @@ import 'dart:math';
 
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'dart:math' as math;
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
+import 'package:smarthomeautomation/widgets/testChart.dart';
 import 'package:thermostat/thermostat.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +33,9 @@ class _HomePageState extends State<HomePage> {
               minVal: 18,
               maxVal: 38,
               onChanged: (value) {
-                print('Selected value : $value');
+                if (kDebugMode) {
+                  print('Selected value : $value');
+                }
               },
             ),
             SizedBox(
@@ -53,6 +57,11 @@ class _HomePageState extends State<HomePage> {
                  );
                 },
                ),
+            ),
+            const SizedBox(height: 10,),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: LineChartSample2(),
             ),
           ],
         ),
