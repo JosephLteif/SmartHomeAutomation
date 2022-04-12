@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Provider.of<AppearanceState>(context, listen: false).isDarkMode?Provider.of<AppearanceState>(context, listen: false).setDarkMode(false):Provider.of<AppearanceState>(context, listen: false).setDarkMode(true);
+        Provider.of<AppearanceState>(context, listen: false).toggleDarkMode();
       },)
     );
 
