@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/views/IntroSlider.dart';
 
 import 'utils/colors.dart';
@@ -10,17 +12,23 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: lightColorTheme,
-        scaffoldBackgroundColor: Colors.white,
-        bottomAppBarColor: Colors.white,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppearanceState>(
+            create: (context) => AppearanceState()),
+      ],
+      child: Consumer<AppearanceState>(
+        builder: ((context, value, child) => MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: value.getThemeMode(),
+          home: IntroPage(),
+        )
       ),
-      home: IntroPage(),
+    )
     );
   }
 }
