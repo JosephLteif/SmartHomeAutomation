@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardElement extends StatelessWidget {
   String title, unit, value, device;
   IconData icon;
-  MaterialColor color;
+  Color color;
   CardElement({required this.color, required this.icon, required this.title, required this.unit, required this.value, required this.device});
 
   @override

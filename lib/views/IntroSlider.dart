@@ -4,6 +4,7 @@ import 'package:intro_slider/slide_object.dart';
 import 'package:collection/collection.dart';
 
 import 'HomePage.dart';
+import 'MainPage.dart';
 
 class IntroPage extends StatelessWidget {
   List<Slide> slides = [];
@@ -45,7 +46,7 @@ class IntroPage extends StatelessWidget {
         onDonePress: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => const MainPage(),
           ),
         ),
       );
