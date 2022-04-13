@@ -39,32 +39,32 @@ class _MainPageState extends State<MainPage> {
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
               icon: const Icon(Icons.apps),
-              title: const Text('Home'),
+              title: const Text('Dashboard'),
               textAlign: TextAlign.center,
-              activeColor: lightColorTheme,
+              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
               inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
             ),
             BottomNavyBarItem(
-              icon: const Icon(Icons.people),
-              title: const Text('Users'),
+              icon: const Icon(Icons.house),
+              title: const Text('Rooms'),
               textAlign: TextAlign.center,
-              activeColor: lightColorTheme,
+              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
               inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
             ),
             BottomNavyBarItem(
-              icon: const Icon(Icons.message),
+              icon: const Icon(Icons.wifi),
               title: const Text(
-                'Messages test for mes teset test test ',
+                'Wifi',
               ),
               textAlign: TextAlign.center,
-              activeColor: lightColorTheme,
+              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
               inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
             ),
             BottomNavyBarItem(
-              icon: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              icon: const Icon(Icons.person),
+              title: const Text('Profile'),
               textAlign: TextAlign.center,
-              activeColor: lightColorTheme,
+              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
               inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
             ),
           ],
