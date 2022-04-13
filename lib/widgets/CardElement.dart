@@ -58,7 +58,7 @@ class CardElement extends StatelessWidget {
             ],
           ),
           Spacer(flex: 2,),
-          Text("$value$unit", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)),
+          Text("$value$unit", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25)),
           Spacer(flex: 1,),
           Text(device, style: const TextStyle(color: Colors.white)),
         ],
