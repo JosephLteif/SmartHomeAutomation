@@ -30,6 +30,8 @@ Map<int, Color> darkcolor = {
 
 MaterialColor darkColorTheme = MaterialColor(0xFF33e1ec, color);
 
+Color darkColorScaffoldTheme = Color(0xFF1f1f2d);
+
 
 
 

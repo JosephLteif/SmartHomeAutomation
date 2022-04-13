@@ -23,7 +23,13 @@ class MyApp extends StatelessWidget {
         builder: ((context, value, child) => MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: darkColorScaffoldTheme,
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: darkColorScaffoldTheme,
+            ),
+            ),
           themeMode: value.getThemeMode(),
           home: IntroPage(),
         )

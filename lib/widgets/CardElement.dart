@@ -39,7 +39,7 @@ class CardElement extends StatelessWidget {
           ,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.6),
+            color: color.withOpacity(isDarkMode?0.6:0.0),
             offset: const Offset(1, 3),
             blurRadius: 10,
             // spreadRadius: 3.0,
@@ -57,8 +57,9 @@ class CardElement extends StatelessWidget {
               Icon(icon, color: Colors.white)
             ],
           ),
-          const Spacer(),
+          Spacer(flex: 2,),
           Text("$value$unit", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)),
+          Spacer(flex: 1,),
           Text(device, style: const TextStyle(color: Colors.white)),
         ],
       ),

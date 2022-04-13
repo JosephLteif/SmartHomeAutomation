@@ -30,42 +30,30 @@ class _MainPageState extends State<MainPage> {
     return Consumer<AppearanceState>(
       builder: ((context, value, child) => Scaffold(
         body: pages[currentIndex],
-        bottomNavigationBar: BottomNavyBar(
-          selectedIndex: currentIndex,
-          showElevation: false,
-          itemCornerRadius: 24,
-          curve: Curves.easeInOutCubicEmphasized,
-          onItemSelected: (index) => setState(() => currentIndex = index),
-          items: <BottomNavyBarItem>[
-            BottomNavyBarItem(
-              icon: const Icon(Icons.apps),
-              title: const Text('Dashboard'),
-              textAlign: TextAlign.center,
-              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
-              inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          selectedItemColor: value.isDarkMode?darkColorTheme:lightColorTheme,
+          unselectedItemColor: value.isDarkMode?Colors.white:Colors.black,
+          selectedFontSize: 12,
+          elevation: 0,
+          onTap: (index) => setState(() => currentIndex = index),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.apps),
+              label: '',
             ),
-            BottomNavyBarItem(
-              icon: const Icon(Icons.house),
-              title: const Text('Rooms'),
-              textAlign: TextAlign.center,
-              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
-              inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
+            BottomNavigationBarItem(
+              icon: Icon(Icons.house),
+              label: '',
             ),
-            BottomNavyBarItem(
-              icon: const Icon(Icons.wifi),
-              title: const Text(
-                'Wifi',
-              ),
-              textAlign: TextAlign.center,
-              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
-              inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
+            BottomNavigationBarItem(
+              icon: Icon(Icons.wifi),
+              label: '',
             ),
-            BottomNavyBarItem(
-              icon: const Icon(Icons.person),
-              title: const Text('Profile'),
-              textAlign: TextAlign.center,
-              activeColor: value.isDarkMode?darkColorTheme:lightColorTheme,
-              inactiveColor: value.isDarkMode?Colors.white:navigationinactivecolor
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart_sharp),
+              label: '',
             ),
           ],
         ),
