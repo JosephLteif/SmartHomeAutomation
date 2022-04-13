@@ -23,52 +23,56 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Thermostat(
-              setPoint: 25,
-              curVal: 20,
-              minVal: 18,
-              maxVal: 38,
-              onChanged: (value) {
-                if (kDebugMode) {
-                  print('Selected value : $value');
-                }
-              },
-            ),
-            SizedBox(
-              height: 160,
-              child: ListView.builder(
-               itemCount: 10,
-               scrollDirection: Axis.horizontal,
-               itemBuilder: (context, index) {
-                 return Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                   child: CardElement(
-                      title: 'Temperature',
-                      value: Random().nextInt(99).toString(),
-                      unit: '°C',
-                      icon: Icons.thermostat,
-                      color: lightColorTheme,
-                      device: "Air Conditioner",
-                    ),
-                 );
+    return Consumer<AppearanceState>(
+      builder: ((context, appearanceState, child) => Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              Thermostat(
+                setPoint: 25,
+                curVal: 20,
+                minVal: 18,
+                maxVal: 38,
+                onChanged: (value) {
+                  if (kDebugMode) {
+                    print('Selected value : $value');
+                  }
                 },
-               ),
-            ),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: LineChartSample2(),
-            ),
-          ],
+              ),
+              SizedBox(
+                height: 160,
+                child: ListView.builder(
+                 itemCount: 10,
+                 scrollDirection: Axis.horizontal,
+                 itemBuilder: (context, index) {
+                   return Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                     child: CardElement(
+                        title: 'Temperature',
+                        value: Random().nextInt(99).toString(),
+                        unit: '°C',
+                        icon: Icons.thermostat,
+                        color: lightColorTheme,
+                        device: "Air Conditioner",
+                        isDarkMode: appearanceState.isDarkMode,
+                      ),
+                   );
+                  },
+                 ),
+              ),
+              const SizedBox(height: 10,),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: LineChartSample2(),
+              ),
+            ],
+          ),
         ),
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          Provider.of<AppearanceState>(context, listen: false).toggleDarkMode();
+        },)
+      )
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Provider.of<AppearanceState>(context, listen: false).toggleDarkMode();
-      },)
     );
 
   }

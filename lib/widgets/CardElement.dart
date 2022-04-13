@@ -4,7 +4,8 @@ class CardElement extends StatelessWidget {
   String title, unit, value, device;
   IconData icon;
   Color color;
-  CardElement({required this.color, required this.icon, required this.title, required this.unit, required this.value, required this.device});
+  bool isDarkMode;
+  CardElement({required this.color, required this.icon, required this.title, required this.unit, required this.value, required this.device, this.isDarkMode = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CardElement extends StatelessWidget {
       width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
+        gradient: !isDarkMode?LinearGradient(
           colors: [
             color,
             Color.fromARGB(255, 242, 242, 243),
@@ -22,12 +23,23 @@ class CardElement extends StatelessWidget {
           begin: const FractionalOffset(0.0, 0.0),
           end: const FractionalOffset(0.0, 2.5),
           stops: const [0.0, 1.0],
-          tileMode: TileMode.clamp),
+          tileMode: TileMode.clamp):
+          LinearGradient(
+          colors: [
+            Color.fromARGB(255, 26, 26, 26),
+            color
+          ],
+          begin: const FractionalOffset(0.0, -.5),
+          end: const FractionalOffset(0.0, 1.0),
+          stops: const [0.0, 1.0],
+          tileMode: TileMode.clamp)
+          ,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            offset: const Offset(5, 5),
+            color: color.withOpacity(0.6),
+            offset: const Offset(1, 3),
             blurRadius: 10,
+            // spreadRadius: 3.0,
           ),
         ],
       ),
