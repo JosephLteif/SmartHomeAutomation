@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smarthomeautomation/providers/AppearanceState.dart';
 
 class CardElement extends StatelessWidget {
   String title, unit, value, device;
   IconData icon;
   Color color;
-  bool isDarkMode;
-  CardElement({required this.color, required this.icon, required this.title, required this.unit, required this.value, required this.device, this.isDarkMode = false});
+  
+  CardElement({required this.color, required this.icon, required this.title, required this.unit, required this.value, required this.device});
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<AppearanceState>(context, listen: false).isDarkMode;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       height: 150,
