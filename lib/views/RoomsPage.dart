@@ -1,12 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:smarthomeautomation/providers/AppearanceState.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
 import 'package:smarthomeautomation/widgets/DataInfoBar.dart';
 import 'package:smarthomeautomation/widgets/TopRowBar.dart';
-import 'package:thermostat/thermostat.dart';
 
 class RoomsPage extends StatefulWidget {
   const RoomsPage({ Key? key }) : super(key: key);
@@ -59,14 +57,43 @@ class _RoomsPageState extends State<RoomsPage> {
                 icon3: Icons.power,
               ),
             ),
-            Spacer(flex: 1,),
-            Thermostat(curVal: currentTemp, setPoint: currentTemp, minVal: 0, maxVal: 100, onChanged: (value) => setState(() {
-              currentTemp = value;
-            }),
-            themeType: Provider.of<AppearanceState>(context, listen: false).isDarkMode?ThermostatThemeType.dark:ThermostatThemeType.light,
-            size: 350,
-            ),
-            Spacer(flex: 2,),
+            const Spacer(flex: 2,),
+            SleekCircularSlider(
+              // TODO change min and max for temp slider
+              max: 100,
+              min: 0,
+                      appearance: CircularSliderAppearance(
+                        size: 300,
+                        customWidths: CustomSliderWidths(
+                          progressBarWidth: 40,
+                          trackWidth: 70,
+                          handlerSize: 22
+                        ),
+                        customColors: CustomSliderColors(
+                          progressBarColors: [
+                            Colors.red,
+                            Colors.red,
+                            Colors.blue,
+                          ],
+                          trackColor: Colors.white,
+                          dotColor: Colors.white,
+                          hideShadow: false,
+                          shadowColor: Colors.black.withOpacity(0.01)
+                        ),
+                      ),
+                      onChangeEnd: (double value) {
+                        // TODO something about temp slider value
+                      },
+                      innerWidget: (value)=> Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("${value.toStringAsPrecision(3)} °C", style: const TextStyle(fontSize: 30),),
+                            const Text("Temp", style: TextStyle(fontSize: 28),),
+                          ],
+                        )
+                        ),
+                      ),
             SizedBox(
               height: 180,
               child: ListView.builder(
@@ -82,7 +109,7 @@ class _RoomsPageState extends State<RoomsPage> {
                   );
                 }),
             ),
-            Spacer(flex: 1,),
+            const Spacer(flex: 1,),
           ],
         ),
       ),

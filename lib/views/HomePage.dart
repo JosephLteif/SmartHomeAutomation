@@ -1,18 +1,10 @@
-import 'dart:math';
 
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
-import 'dart:math' as math;
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
-import 'package:smarthomeautomation/widgets/DataInfoBar.dart';
-import 'package:smarthomeautomation/widgets/testChart.dart';
-import 'package:thermostat/thermostat.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
