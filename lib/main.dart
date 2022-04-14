@@ -15,27 +15,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AppearanceState>(
-            create: (context) => AppearanceState()),
-      ],
-      child: Consumer<AppearanceState>(
-        builder: ((context, value, child) => MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData.light(),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: darkColorScaffoldTheme,
-            bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: darkColorScaffoldTheme,
-            ),
-            ),
-          themeMode: value.getThemeMode(),
-          home: IntroPage(),
-        )
-      ),
-    )
-    );
+        providers: [
+          ChangeNotifierProvider<AppearanceState>(
+              create: (context) => AppearanceState()),
+        ],
+        child: Consumer<AppearanceState>(
+          builder: ((context, value, child) => MaterialApp(
+                title: 'Flutter Demo',
+                theme: ThemeData.light(),
+                darkTheme: ThemeData(
+                  brightness: Brightness.dark,
+                  scaffoldBackgroundColor: darkColorScaffoldTheme,
+                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                    backgroundColor: darkColorScaffoldTheme,
+                  ),
+                ),
+                themeMode: value.getThemeMode(),
+                home: IntroPage(),
+              )),
+        ));
   }
 }
-

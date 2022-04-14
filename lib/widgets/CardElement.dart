@@ -9,12 +9,14 @@ class CardElement extends StatelessWidget {
   Color color;
 
   CardElement(
-      {Key? key, required this.color,
+      {Key? key,
+      required this.color,
       required this.icon,
       required this.title,
       required this.unit,
       required this.value,
-      required this.device}) : super(key: key);
+      required this.device})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +71,7 @@ class CardElement extends StatelessWidget {
           ),
           Flexible(
             child: LineChart(LineChartData(
-              gridData: FlGridData(
-                show: false
-              ),
+              gridData: FlGridData(show: false),
               titlesData: FlTitlesData(
                 show: false,
               ),

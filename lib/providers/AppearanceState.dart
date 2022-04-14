@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppearanceState extends ChangeNotifier{
+class AppearanceState extends ChangeNotifier {
   bool _isDarkMode = false;
   bool get isDarkMode => _isDarkMode;
 
@@ -11,9 +11,6 @@ class AppearanceState extends ChangeNotifier{
   }
 
   ThemeMode getThemeMode() {
-    return isDarkMode?ThemeMode.dark:ThemeMode.light;
+    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
-
-  
-  
 }

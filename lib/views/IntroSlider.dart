@@ -9,11 +9,12 @@ import 'MainPage.dart';
 class IntroPage extends StatelessWidget {
   List<Slide> slides = [];
 
-  IntroPage({Key? key}) : super(key: key){
+  IntroPage({Key? key}) : super(key: key) {
     slides.add(
       Slide(
         title: "ERASER",
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description:
+            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: const Color(0xfff5a623),
       ),
@@ -21,7 +22,8 @@ class IntroPage extends StatelessWidget {
     slides.add(
       Slide(
         title: "PENCIL",
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: const Color(0xff203152),
       ),
@@ -39,16 +41,15 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return IntroSlider(
-        isScrollable: true,
-
-        slides: slides,
-        onDonePress: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainPage(),
-          ),
+    return IntroSlider(
+      isScrollable: true,
+      slides: slides,
+      onDonePress: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainPage(),
         ),
-      );
-    }
+      ),
+    );
+  }
 }
