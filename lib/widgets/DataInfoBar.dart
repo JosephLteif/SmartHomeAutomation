@@ -36,7 +36,8 @@ class DataInfoBar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: isDarkMode ? darkColorTheme : Colors.black.withOpacity(0.2),
-            offset: const Offset(0, 1),
+            offset: const Offset(0, 2),
+            blurRadius: 3
           ),
         ],
         borderRadius: BorderRadius.circular(10)
