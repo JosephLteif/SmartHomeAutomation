@@ -15,14 +15,14 @@ class DataInfoBar extends StatelessWidget {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        gradient: isDarkMode?LinearGradient(
+        gradient: isDarkMode?const LinearGradient(
           colors: [
-            const Color.fromARGB(255, 26, 26, 26),
-            darkColorTheme
+            Color(0xFF2b2c44),
+            Color(0xFF213249)
           ],
-          begin: const FractionalOffset(0.0, -.5),
-          end: const FractionalOffset(0.0, 2.0),
-          stops: const [0.0, 1.0],
+          begin: FractionalOffset(0.0, -.5),
+          end: FractionalOffset(0.0, 1.0),
+          stops: [0.0, 1.0],
           tileMode: TileMode.clamp):
           const LinearGradient(
           colors: [
