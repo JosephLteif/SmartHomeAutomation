@@ -69,6 +69,9 @@ class CardElement extends StatelessWidget {
           ),
           Flexible(
             child: LineChart(LineChartData(
+              gridData: FlGridData(
+                show: false
+              ),
               titlesData: FlTitlesData(
                 show: false,
               ),
