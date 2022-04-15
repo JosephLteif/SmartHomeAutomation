@@ -34,8 +34,9 @@ class CardElement extends StatelessWidget {
       ),
     );
     return GestureDetector(
-      onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TestCategoryPage(title: title)));
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TestCategoryPage(title: title)));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -92,7 +93,8 @@ class CardElement extends StatelessWidget {
                 ),
                 borderData: FlBorderData(
                     show: false,
-                    border: Border.all(color: const Color(0xff37434d), width: 1)),
+                    border:
+                        Border.all(color: const Color(0xff37434d), width: 1)),
                 minX: 0, //lowest value in the x axis
                 maxX: 9, //highest value in the x axis
                 minY: 0, //lowest value in the y axis
@@ -108,7 +110,9 @@ class CardElement extends StatelessWidget {
                     //   FlSpot(9.5, 20),
                     //   FlSpot(11, 4),
                     // ],
-                    spots: dataItems.map((e) => FlSpot(e.x.toDouble(), e.y)).toList(),
+                    spots: dataItems
+                        .map((e) => FlSpot(e.x.toDouble(), e.y))
+                        .toList(),
                     isCurved: true,
                     gradient: const LinearGradient(
                       colors: [Colors.white, Colors.white],

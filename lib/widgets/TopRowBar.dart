@@ -24,8 +24,15 @@ class TopRowBar extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    icon: Icon(Icons.arrow_back_ios, color: isDarkMode?Colors.white:backArrowColor,),
-                    label: Text('back', style: TextStyle(color: isDarkMode?Colors.white:backArrowColor),)))
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: isDarkMode ? Colors.white : backArrowColor,
+                    ),
+                    label: Text(
+                      'back',
+                      style: TextStyle(
+                          color: isDarkMode ? Colors.white : backArrowColor),
+                    )))
             : Container(),
         Padding(
           padding: const EdgeInsets.all(16.0),
