@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                                     color: appearanceState.isDarkMode
                                         ? darkColorTheme
                                         : lightColorTheme)),
-                            Text("Home",
+                            const Text("Home",
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold)),
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                             unit: "°C",
                             title: "Living Room",
                             icon: Icons.home,
-                            color: Color(0xFF6f5eff),
+                            color: const Color(0xFF6f5eff),
                           ),
                         ),
                         StaggeredGridTile.count(
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                             unit: "°C",
                             title: "Living Room",
                             icon: Icons.home,
-                            color: Color(0xFF14c3b5),
+                            color: const Color(0xFF14c3b5),
                           ),
                         ),
                         StaggeredGridTile.count(
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                             unit: "°C",
                             title: "Living Room",
                             icon: Icons.home,
-                            color: Color(0xFFf26889),
+                            color: const Color(0xFFf26889),
                           ),
                         ),
                         StaggeredGridTile.count(
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                             unit: "°C",
                             title: "Living Room",
                             icon: Icons.home,
-                            color: Color(0xFFe27061),
+                            color: const Color(0xFFe27061),
                           ),
                         ),
                       ],

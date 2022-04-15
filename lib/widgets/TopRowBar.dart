@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smarthomeautomation/providers/AppearanceState.dart';
+import 'package:smarthomeautomation/utils/colors.dart';
 
 class TopRowBar extends StatelessWidget {
   String title;
-  TopRowBar({Key? key, required this.title}) : super(key: key);
+  bool backArrow;
+  TopRowBar({Key? key, required this.title, this.backArrow = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        Provider.of<AppearanceState>(context, listen: false).isDarkMode;
     return Stack(
       children: <Widget>[
+        backArrow
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                    onPressed: () {
+                      if (Navigator.canPop(context)) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    icon: Icon(Icons.arrow_back_ios, color: isDarkMode?Colors.white:backArrowColor,),
+                    label: Text('back', style: TextStyle(color: isDarkMode?Colors.white:backArrowColor),)))
+            : Container(),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Align(alignment: Alignment.center, child: Text(title)),

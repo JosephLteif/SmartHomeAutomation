@@ -33,3 +33,5 @@ MaterialColor darkColorTheme = MaterialColor(0xFF33e1ec, color);
 Color darkColorScaffoldTheme = Color(0xFF1f1f2d);
 
 Color navigationinactivecolor = Color(0xFF263238);
+
+Color backArrowColor = Color(0xFFfb939c);

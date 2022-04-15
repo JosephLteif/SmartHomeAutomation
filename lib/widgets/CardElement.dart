@@ -35,7 +35,7 @@ class CardElement extends StatelessWidget {
     );
     return GestureDetector(
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TestCategoryPage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TestCategoryPage(title: title)));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
