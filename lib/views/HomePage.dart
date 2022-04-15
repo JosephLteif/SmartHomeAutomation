@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
@@ -13,6 +15,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+    MqttServerClient client =
+      MqttServerClient.withPort('192.168.1.24', 'flutter_client', 1883);
+    String _temp = '0.0';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    connect();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<AppearanceState>(
@@ -150,6 +161,11 @@ class _HomePageState extends State<HomePage> {
                             color: const Color(0xFFe27061),
                           ),
                         ),
+                        SizedBox(height: 30,),
+                        ElevatedButton(onPressed: (){subscribeToTopic(client);}, child: Text("Subscribe")),
+                        ElevatedButton(onPressed: (){publishMessage();}, child: Text("Publish")),
+                        Text(_temp.toString()),
+                        SizedBox(height: 30,),
                       ],
                     )
                   ],
@@ -159,4 +175,77 @@ class _HomePageState extends State<HomePage> {
           )),
     );
   }
+
+Future<MqttServerClient> connect() async {
+  client.logging(on: true);
+  client.onConnected = onConnected;
+  client.onDisconnected = onDisconnected;
+  client.onSubscribed = onSubscribed;
+  client.onSubscribeFail = onSubscribeFail;
+  client.pongCallback = pong;
+
+  final connMessage = MqttConnectMessage()
+  .withClientIdentifier("client-1");
+  client.connectionMessage = connMessage;
+  try {
+    await client.connect();
+  } catch (e) {
+    print('Exception: $e');
+    client.disconnect();
+  }
+
+  client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {   
+    MqttPublishMessage temp = c[0].payload as MqttPublishMessage;
+    _temp = MqttPublishPayload.bytesToStringAsString(temp.payload.message);
+    setState(() {
+      
+    });
+    print('Received message:${_temp} from topic: ${c[0].topic}>');
+  });
+
+  return client;
+}
+
+void subscribeToTopic(MqttServerClient client) {
+  client.subscribe('real_unique_topic', MqttQos.exactlyOnce);
+}
+
+// connection succeeded
+void onConnected() {
+  print('Connected');
+}
+
+// unconnected
+void onDisconnected() {
+  print('Disconnected');
+}
+
+// subscribe to topic succeeded
+void onSubscribed(String topic) {
+  print('Subscribed topic: $topic');
+}
+
+// subscribe to topic failed
+void onSubscribeFail(String topic) {
+  print('Failed to subscribe $topic');
+}
+
+// unsubscribe succeeded
+void onUnsubscribed(String topic) {
+  print('Unsubscribed topic: $topic');
+}
+
+// PING response received
+void pong() {
+  print('Ping response client callback invoked');
+}
+
+void publishMessage(){
+  const pubTopic = 'test';
+  final builder = MqttClientPayloadBuilder();
+  builder.addString('Hello MQTT');
+  client.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
+}
+
+
 }
