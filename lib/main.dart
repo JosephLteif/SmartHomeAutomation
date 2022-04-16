@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/views/IntroSlider.dart';
 
+import 'providers/ThingsState.dart';
 import 'utils/colors.dart';
 
 void main() {
@@ -18,6 +19,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<AppearanceState>(
               create: (context) => AppearanceState()),
+          ChangeNotifierProvider<ThingsState>(
+              create: (context) => ThingsState()),
         ],
         child: Consumer<AppearanceState>(
           builder: ((context, value, child) => MaterialApp(
