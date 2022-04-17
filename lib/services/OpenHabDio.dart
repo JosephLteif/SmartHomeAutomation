@@ -21,7 +21,7 @@ class OpenHabDio {
           BaseOptions(
       baseUrl: host,
       connectTimeout: 15000,
-      receiveTimeout: 3000,
+      receiveTimeout: 10000,
     ),
     )..interceptors.addAll([LoggingInterceptor(), BaseInterceptor()]);
   }

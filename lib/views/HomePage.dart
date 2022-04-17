@@ -19,18 +19,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
     MqttServerClient client =
       MqttServerClient.withPort('192.168.1.24', 'flutter_client', 1883);
-    String _temp = '0.0';
+      bool didUpdate = false;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    // connect();
-  }
-  @override
   Widget build(BuildContext context) {
+    if(!didUpdate){
+      Provider.of<OpenHabState>(context).update();
+      didUpdate = true;
+    }
     return Consumer<AppearanceState>(
       builder: ((context, appearanceState, child) => Consumer<OpenHabState>(
-        builder: (context, thingsState, child) => Scaffold(
+        builder: (context, openhabState, child) => Scaffold(
               body: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
