@@ -6,6 +6,7 @@ import 'package:smarthomeautomation/utils/colors.dart';
 
 import 'HomePage.dart';
 import 'PlaceHolderPage.dart';
+import 'RoomsDetailsPage.dart';
 import 'RoomsPage.dart';
 
 class MainPage extends StatefulWidget {
