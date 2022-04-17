@@ -4,7 +4,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
-import 'package:smarthomeautomation/providers/ThingsState.dart';
+import 'package:smarthomeautomation/providers/OpenHabState.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
@@ -28,9 +28,8 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<ThingsState>(context).things);
     return Consumer<AppearanceState>(
-      builder: ((context, appearanceState, child) => Consumer<ThingsState>(
+      builder: ((context, appearanceState, child) => Consumer<OpenHabState>(
         builder: (context, thingsState, child) => Scaffold(
               body: SafeArea(
                 child: SingleChildScrollView(
@@ -93,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.bold)),
                               Text("Home",
                                   style: TextStyle(
+                                      decoration: TextDecoration.underline,
                                       fontSize: 25.0,
                                       fontWeight: FontWeight.bold,
                                       color: appearanceState.isDarkMode

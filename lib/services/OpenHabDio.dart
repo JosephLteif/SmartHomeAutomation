@@ -9,7 +9,7 @@ class OpenHabDio {
 
   var _dio;
 
-    Dio get dio => _dio;
+  Dio get dio => _dio;
 
   factory OpenHabDio() {
     return _instance;
@@ -20,28 +20,9 @@ class OpenHabDio {
     _dio = Dio(
           BaseOptions(
       baseUrl: host,
-      connectTimeout: 5000,
+      connectTimeout: 15000,
       receiveTimeout: 3000,
     ),
     )..interceptors.addAll([LoggingInterceptor(), BaseInterceptor()]);
   }
-
-  // static OpenHabDio _singleton;
-  
-
-  // factory OpenHabDio() => _singleton??OpenHabDio._internal();
-
-  // Dio CustomDio(){
-  //   return Dio(
-  //         BaseOptions(
-  //     baseUrl: host,
-  //     connectTimeout: 5000,
-  //     receiveTimeout: 3000,
-  //   ),
-  //   )..interceptors.add(Logging());
-  // }
-
-  // OpenHabDio._internal(){
-  //   _dio = CustomDio();
-  // }
 }

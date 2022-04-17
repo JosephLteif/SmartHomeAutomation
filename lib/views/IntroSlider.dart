@@ -44,12 +44,7 @@ class IntroPage extends StatelessWidget {
     return IntroSlider(
       isScrollable: true,
       slides: slides,
-      onDonePress: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MainPage(),
-        ),
-      ),
-    );
+      onDonePress: () => Navigator.pushReplacementNamed(context, '/main'),
+      );
   }
 }

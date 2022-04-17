@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/views/IntroSlider.dart';
 
-import 'providers/ThingsState.dart';
+import 'providers/OpenHabState.dart';
 import 'utils/colors.dart';
+import 'views/MainPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<AppearanceState>(
               create: (context) => AppearanceState()),
-          ChangeNotifierProvider<ThingsState>(
-              create: (context) => ThingsState()),
+          ChangeNotifierProvider<OpenHabState>(
+              create: (context) => OpenHabState()),
         ],
         child: Consumer<AppearanceState>(
           builder: ((context, value, child) => MaterialApp(
@@ -34,7 +35,10 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 themeMode: value.getThemeMode(),
-                home: IntroPage(),
+                routes: {
+                  '/': (context) => IntroPage(),
+                  '/main': (context) => const MainPage(),
+                },
               )),
         ));
   }

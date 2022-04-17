@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 
-class ThingsState extends ChangeNotifier{
+class OpenHabState extends ChangeNotifier{
   List<Thing> _things = [];
   List<Thing> get things => _things;
 
-  ThingsState(){
+  
+
+  OpenHabState(){
     Fetchthings();
   }
 

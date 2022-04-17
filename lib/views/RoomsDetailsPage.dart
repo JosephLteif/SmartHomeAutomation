@@ -67,7 +67,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                 icon3: Icons.power,
               ),
             ),
-            Spacer(flex: 1,),
+            const Spacer(flex: 1,),
             Container(
               height: width * 0.7,
               width: width * 0.7,
@@ -155,15 +155,15 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                 ]),
               ),
             ),
-            Spacer(flex: 1,),
+            const Spacer(flex: 1,),
             SizedBox(
               height: 180,
               child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: colors.length,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    int number = Random().nextInt(colors.length);
+                    int number = index;
                     return Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: CardElement(
@@ -176,7 +176,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                     );
                   }),
             ),
-            Spacer(flex: 2,),
+            const Spacer(flex: 2,),
           ],
         ),
       ),
