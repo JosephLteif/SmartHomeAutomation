@@ -5,15 +5,26 @@ import 'BaseInterceptor.dart';
 import 'LoggingInterceptor.dart';
 
 class OpenHabDio {
-  final Dio _dio = Dio(
+  static final OpenHabDio _instance = OpenHabDio._internal();
+
+  var _dio;
+
+    Dio get dio => _dio;
+
+  factory OpenHabDio() {
+    return _instance;
+  }
+
+  OpenHabDio._internal() {
+    // initialization logic 
+    _dio = Dio(
           BaseOptions(
       baseUrl: host,
       connectTimeout: 5000,
       receiveTimeout: 3000,
     ),
     )..interceptors.addAll([LoggingInterceptor(), BaseInterceptor()]);
-
-    Dio get dio => _dio;
+  }
 
   // static OpenHabDio _singleton;
   

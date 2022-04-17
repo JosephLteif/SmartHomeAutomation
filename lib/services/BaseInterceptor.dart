@@ -5,14 +5,14 @@ import 'package:dio/dio.dart';
 class BaseInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    String username = "johndoe@outlook.com";
-    String password = "hahaha";
+    String username = "pass@outlook.com";
+    String password = "pass";
     var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
     options.headers.addAll(
       {
-        "X-OPENHAB-TOKEN": "{{example token}}",
-    'authorization': auth
-    }
+        "X-OPENHAB-TOKEN": "pass",
+        'authorization': auth
+      }
     );
     return super.onRequest(options, handler);
   }
