@@ -1,8 +1,8 @@
 class Thing {
   String? label;
   String? bridgeUID;
-  Configuration? configuration;
-  Configuration? properties;
+  dynamic configuration;
+  dynamic properties;
   String? uID;
   String? thingTypeUID;
   List<Channels>? channels;
@@ -21,12 +21,8 @@ class Thing {
   Thing.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     bridgeUID = json['bridgeUID'];
-    configuration = json['configuration'] != null
-        ? Configuration.fromJson(json['configuration'])
-        : null;
-    properties = json['properties'] != null
-        ? Configuration.fromJson(json['properties'])
-        : null;
+    configuration = json['configuration'];
+    properties = json['properties'];
     uID = json['UID'];
     thingTypeUID = json['thingTypeUID'];
     if (json['channels'] != null) {
@@ -58,17 +54,6 @@ class Thing {
   }
 }
 
-class Configuration {
-  Configuration();
-
-  Configuration.fromJson(Map<String, dynamic> json);
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    return data;
-  }
-}
-
 class Channels {
   String? uid;
   String? id;
@@ -78,8 +63,8 @@ class Channels {
   String? label;
   String? description;
   List<String>? defaultTags;
-  Configuration? properties;
-  Configuration? configuration;
+  dynamic properties;
+  dynamic configuration;
 
   Channels(
       {this.uid,
@@ -102,12 +87,8 @@ class Channels {
     label = json['label'];
     description = json['description'];
     defaultTags = json['defaultTags'].cast<String>();
-    properties = json['properties'] != null
-        ? Configuration.fromJson(json['properties'])
-        : null;
-    configuration = json['configuration'] != null
-        ? Configuration.fromJson(json['configuration'])
-        : null;
+    properties = json['properties'];
+    configuration = json['configuration'];
   }
 
   Map<String, dynamic> toJson() {

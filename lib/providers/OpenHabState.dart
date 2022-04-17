@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smarthomeautomation/models/ItemModel.dart';
+import 'package:smarthomeautomation/models/MqttBroker.dart';
 import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 
@@ -12,6 +13,8 @@ class OpenHabState extends ChangeNotifier{
 
   final List<String> _rooms = [];
   List<String> get rooms => _rooms;
+
+  MqttBroker mqttBroker = MqttBroker();
   
 
   OpenHabState(){
@@ -27,7 +30,19 @@ class OpenHabState extends ChangeNotifier{
     _things.clear();
     _rooms.clear();
     _things = await OpenHabService().getThings();
-    _things.forEach((thing) => _rooms.add(thing.location!));
+    for (var thing in _things) {
+      String location = thing.location??'';
+      if(location!=''){
+        if(!_rooms.contains(location)){
+          _rooms.add(location);
+        }
+      }
+      if(thing.label == "MQTT Broker"){
+        dynamic temp = thing.configuration;
+        mqttBroker.host = temp["host"];
+        mqttBroker.port = temp["port"].toString();
+      }
+    }
     notifyListeners();
   }
   void Fetchitems() async{
