@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,8 +45,23 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
     "°C",
     "CCTV Cameras",
   ];
+
+  List<Timer> timers = [];
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    for (var element in timers) {element.cancel();}
+    super.dispose();
+  }
+
+  bool isFirstTime = true;
   @override
   Widget build(BuildContext context) {
+    if(isFirstTime){
+      Provider.of<OpenHabState>(context).selectThingsByLocation(widget.title);
+      Provider.of<OpenHabState>(context).getSensorData();
+    }
     bool isDarkMode =
         Provider.of<AppearanceState>(context, listen: false).isDarkMode;
     double height = MediaQuery.of(context).size.height;
@@ -161,42 +176,26 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
               SizedBox(
                 height: 180,
                 child: ListView.builder(
-                    itemCount: openhabState.things.length - 1,
+                    itemCount: openhabState.selectedThings.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       int number = index;
-                      if(openhabState.things[number].label.toString()!="MQTT Broker" && openhabState.things[number].channels!.first.configuration['stateTopic']!=null){
-                        openhabState.connect().then((value) {
-                          openhabState.subscribeToTopic(openhabState.things[number].channels!.first.configuration['stateTopic']);
-                        });
+                      if(isFirstTime){
+                        timers.add(Timer.periodic(const Duration(seconds: 10), (timer){
+                          openhabState.getSensorData();
+                        }));
+                        isFirstTime = false;
                       }
-                      String state = '0';
-                      bool isDone = false;
-                      out:
-                      if(!isDone){
-                        for (var thing in openhabState.things) {
-                          for (var channels in thing.channels!) {
-                            for (var linkeditem in channels.linkedItems) {
-                              for (var item in openhabState.items) { 
-                                if(linkeditem == openhabState.items[number].label){
-                                  state = item.state.toString();
-                                  isDone = true;
-                                  break out;
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
+                      
                       return Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: CardElement(
                             color: colors[number],
                             icon: icons[number],
-                            title: titles[number],
+                            title: openhabState.selectedThings.elementAt(index).label.toString(),
                             unit: units[number],
-                            value: state,
+                            value: openhabState.items.firstWhere((element) => element.name.toString() == openhabState.selectedThings.elementAt(index).channels!.first.linkedItems.first.toString()).state.toString(),
                             device: titles[number]),
                       );
                     }),

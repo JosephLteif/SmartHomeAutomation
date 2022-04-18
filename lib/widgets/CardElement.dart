@@ -41,7 +41,7 @@ class CardElement extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         height: 150,
-        width: 150,
+        width: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: !isDarkMode

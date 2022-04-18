@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/providers/OpenHabState.dart';
-import 'package:smarthomeautomation/services/OpenHabService.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
 

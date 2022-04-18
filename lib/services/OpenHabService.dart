@@ -26,6 +26,7 @@ class OpenHabService {
     }
     return things;
   }
+
   Future<List<Item>> getItems() async{
     List<Item> items = [];
     try {
@@ -41,5 +42,18 @@ class OpenHabService {
       throw Exception(e);
     }
     return items;
+  }
+
+  Future<String> getItemState(String name) async{
+    try {
+      Response response = await dio.get(itemStateEndpoint.replaceAll('{itemname}', name));
+      if(response.statusCode == 200){
+        return response.data;
+      } else {
+        throw Exception(response.statusMessage);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

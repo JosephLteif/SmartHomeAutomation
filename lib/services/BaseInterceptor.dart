@@ -24,5 +24,14 @@ class BaseInterceptor extends Interceptor {
     );
     return super.onResponse(response, handler);
   }
+
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    // TODO: implement onError
+     print(
+      'RESPONSE[${err.response}] => PATH: ${err.requestOptions.path}',
+    );
+    super.onError(err, handler);
+  }
   
 }
