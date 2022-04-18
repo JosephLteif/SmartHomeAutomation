@@ -21,6 +21,8 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
   TextEditingController? labelController;
   TextEditingController? topicController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? selectedValue = null;
+  final _dropdownFormKey = GlobalKey<FormState>();
   // final animationsMap = {
   //   'circleImageOnPageLoadAnimation': AnimationInfo(
   //     curve: Curves.bounceOut,
@@ -190,6 +192,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 1,
               decoration: BoxDecoration(
+                
                 color: Color(0xFF1A1F24),
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
@@ -294,47 +297,40 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-                      child: TextFormField(
-                        controller: ailmentsController,
-                        obscureText: false,
+                      padding: EdgeInsetsDirectional.fromSTEB(141, 20, 20, 0),
+                      child: DropdownButtonFormField(
                         decoration: InputDecoration(
-                          labelText: 'Ailments',
-                          labelStyle: const TextStyle(
-                            fontFamily: 'Lexend Deca',
-                            color: Color.fromARGB(211, 211, 211, 211),
-                          ),
-                          hintText: 'What types of allergies do you have..',
-                          hintStyle: const TextStyle(
-                            fontFamily: 'Lexend Deca',
-                            color: Color(0x98FFFFFF),
-                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
+                                color: Color.fromRGBO(17, 20, 23, 100)),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
+                                color: Color.fromRGBO(17, 20, 23, 100)),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           filled: true,
                           fillColor: Color.fromRGBO(17, 20, 23, 100),
-                          contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
                         ),
-                        style: const TextStyle(
-                          fontFamily: 'Lexend Deca',
-                          color: Color(0x00000000),
-                        ),
+                        validator: (value) =>
+                            value == null ? "Select a country" : null,
+                        dropdownColor: Color.fromRGBO(17, 20, 23, 100),
+                        value: selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                          });
+                        },
+                        items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        style: TextStyle(color: Colors.white),
                       ),
-                    ),
-
+                    )
                     // Padding(
                     //   padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                     //   child: StreamBuilder<UsersRecord>(
