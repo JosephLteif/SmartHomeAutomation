@@ -17,13 +17,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-    MqttServerClient client =
-      MqttServerClient.withPort('192.168.1.24', 'flutter_client', 1883);
-      bool didUpdate = false;
+  bool didUpdate = false;
 
   @override
   Widget build(BuildContext context) {
-    if(!didUpdate){
+    if(!didUpdate) {
       Provider.of<OpenHabState>(context).update();
       didUpdate = true;
     }
@@ -174,77 +172,4 @@ class _HomePageState extends State<HomePage> {
       )),
     );
   }
-
-// Future<MqttServerClient> connect() async {
-//   client.logging(on: true);
-//   client.onConnected = onConnected;
-//   client.onDisconnected = onDisconnected;
-//   client.onSubscribed = onSubscribed;
-//   client.onSubscribeFail = onSubscribeFail;
-//   client.pongCallback = pong;
-
-//   final connMessage = MqttConnectMessage()
-//   .withClientIdentifier("client-1");
-//   client.connectionMessage = connMessage;
-//   try {
-//     await client.connect();
-//   } catch (e) {
-//     print('Exception: $e');
-//     client.disconnect();
-//   }
-
-//   client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {   
-//     MqttPublishMessage temp = c[0].payload as MqttPublishMessage;
-//     _temp = MqttPublishPayload.bytesToStringAsString(temp.payload.message);
-//     setState(() {
-      
-//     });
-//     print('Received message:${_temp} from topic: ${c[0].topic}>');
-//   });
-
-//   return client;
-// }
-
-// void subscribeToTopic(MqttServerClient client) {
-//   client.subscribe('real_unique_topic', MqttQos.exactlyOnce);
-// }
-
-// // connection succeeded
-// void onConnected() {
-//   print('Connected');
-// }
-
-// // unconnected
-// void onDisconnected() {
-//   print('Disconnected');
-// }
-
-// // subscribe to topic succeeded
-// void onSubscribed(String topic) {
-//   print('Subscribed topic: $topic');
-// }
-
-// // subscribe to topic failed
-// void onSubscribeFail(String topic) {
-//   print('Failed to subscribe $topic');
-// }
-
-// // unsubscribe succeeded
-// void onUnsubscribed(String topic) {
-//   print('Unsubscribed topic: $topic');
-// }
-
-// // PING response received
-// void pong() {
-//   print('Ping response client callback invoked');
-// }
-
-// void publishMessage(){
-//   const pubTopic = 'test';
-//   final builder = MqttClientPayloadBuilder();
-//   builder.addString('Hello MQTT');
-//   client.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
-// }
-
-
 }

@@ -1,6 +1,6 @@
 class MqttBroker{
   String host = "";
-  String port = "";
+  int port = 0;
 
   MqttBroker();
 

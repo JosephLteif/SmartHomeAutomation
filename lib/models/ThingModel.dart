@@ -55,6 +55,7 @@ class Thing {
 }
 
 class Channels {
+  late List<String> linkedItems;
   String? uid;
   String? id;
   String? channelTypeUID;
@@ -67,7 +68,8 @@ class Channels {
   dynamic configuration;
 
   Channels(
-      {this.uid,
+      {this.linkedItems = const [],
+      this.uid,
       this.id,
       this.channelTypeUID,
       this.itemType,
@@ -79,6 +81,14 @@ class Channels {
       this.configuration});
 
   Channels.fromJson(Map<String, dynamic> json) {
+    if(json['linkedItems'] != null) {
+      linkedItems = [];
+      json['linkedItems'].forEach((v) {
+        linkedItems.add(v.toString());
+      });
+    } else {
+      linkedItems = [];
+    }
     uid = json['uid'];
     id = json['id'];
     channelTypeUID = json['channelTypeUID'];
@@ -93,6 +103,7 @@ class Channels {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['linkedItems'] = linkedItems;
     data['uid'] = uid;
     data['id'] = id;
     data['channelTypeUID'] = channelTypeUID;
