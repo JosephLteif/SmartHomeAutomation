@@ -6,6 +6,8 @@ import 'package:smarthomeautomation/providers/OpenHabState.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/widgets/CardElement.dart';
 
+import 'AddSensorPage.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -18,13 +20,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(!didUpdate) {
+    if (!didUpdate) {
       Provider.of<OpenHabState>(context).update();
       didUpdate = true;
     }
     return Consumer<AppearanceState>(
       builder: ((context, appearanceState, child) => Consumer<OpenHabState>(
-        builder: (context, openhabState, child) => Scaffold(
+            builder: (context, openhabState, child) => Scaffold(
               body: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -99,7 +101,13 @@ class _HomePageState extends State<HomePage> {
                             color: appearanceState.isDarkMode
                                 ? darkColorTheme
                                 : lightColorTheme,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>  const CompleteProfileWidget()),
+                              );
+                            },
                           )
                         ],
                       ),
@@ -166,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-      )),
+          )),
     );
   }
 }
