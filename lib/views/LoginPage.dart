@@ -21,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
 
   init() async {
     prefs = await SharedPreferences.getInstance();
-    if(prefs.getBool('isLoggedIn')??false){
+    if(prefs.getString('X-OPENHAB-TOKEN').toString() == ''){
+      Navigator.pushReplacementNamed(context, '/setToken');
+    } else if(prefs.getBool('isLoggedIn')??false){
       Navigator.pushReplacementNamed(context, '/main');
     }
   }

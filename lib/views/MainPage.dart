@@ -1,14 +1,10 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
-
 import 'HomePage.dart';
 import 'PlaceHolderPage.dart';
-import 'RoomsDetailsPage.dart';
 import 'RoomsPage.dart';
-import 'SetTokenPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -24,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const RoomsPage(),
     const PlaceHolderPage(),
-    SetTokenPage(),
+    const PlaceHolderPage(),
   ];
 
   @override

@@ -67,6 +67,7 @@ class _SetTokenPageState extends State<SetTokenPage> {
                             textColor: Colors.white,
                             fontSize: 16.0
                           );
+                      Navigator.pushReplacementNamed(context, '/main');
                       } else {
                         Fluttertoast.showToast(
                             msg: "Error Saving Token",
