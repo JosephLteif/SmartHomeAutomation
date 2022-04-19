@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    String username = "pass";
-    String password = "pass";
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String username = await prefs.getString('email').toString();
+    String password = await prefs.getString('password').toString();
     var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
     options.headers.addAll(
       {

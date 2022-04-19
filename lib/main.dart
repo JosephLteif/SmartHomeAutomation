@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
-import 'package:smarthomeautomation/views/IntroSlider.dart';
-
+import 'package:smarthomeautomation/views/LoginPage.dart';
 import 'providers/OpenHabState.dart';
 import 'utils/colors.dart';
 import 'views/MainPage.dart';
@@ -26,8 +25,12 @@ class MyApp extends StatelessWidget {
         child: Consumer<AppearanceState>(
           builder: ((context, value, child) => MaterialApp(
                 title: 'Flutter Demo',
-                theme: ThemeData.light(),
+                theme: ThemeData(
+                  brightness: Brightness.light,
+                  primarySwatch: lightColorTheme,
+                ),
                 darkTheme: ThemeData(
+                  primarySwatch: darkColorTheme,
                   brightness: Brightness.dark,
                   scaffoldBackgroundColor: darkColorScaffoldTheme,
                   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
                 ),
                 themeMode: value.getThemeMode(),
                 routes: {
-                  '/': (context) => IntroPage(),
+                  '/': (context) => LoginPage(),
                   '/main': (context) => const MainPage(),
                 },
               )),
