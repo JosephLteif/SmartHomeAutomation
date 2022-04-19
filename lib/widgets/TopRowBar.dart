@@ -38,10 +38,10 @@ class TopRowBar extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Align(alignment: Alignment.center, child: Text(title)),
         ),
-        Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.more_vert_rounded))),
+        // Align(
+        //     alignment: Alignment.centerRight,
+        //     child: IconButton(
+        //         onPressed: () {}, icon: const Icon(Icons.more_vert_rounded))),
       ],
     );
   }

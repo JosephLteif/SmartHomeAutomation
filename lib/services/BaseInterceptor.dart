@@ -12,7 +12,7 @@ class BaseInterceptor extends Interceptor {
     var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
     options.headers.addAll(
       {
-        "X-OPENHAB-TOKEN": "pass",
+        "X-OPENHAB-TOKEN": prefs.getString('X-OPENHAB-TOKEN').toString(),
         'authorization': auth
       }
     );

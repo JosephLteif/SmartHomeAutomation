@@ -8,6 +8,7 @@ import 'HomePage.dart';
 import 'PlaceHolderPage.dart';
 import 'RoomsDetailsPage.dart';
 import 'RoomsPage.dart';
+import 'SetTokenPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const RoomsPage(),
     const PlaceHolderPage(),
-    const PlaceHolderPage(),
+    SetTokenPage(),
   ];
 
   @override
