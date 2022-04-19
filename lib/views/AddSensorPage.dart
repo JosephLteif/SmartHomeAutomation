@@ -1,11 +1,13 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
+
+import '../services/OpenHabService.dart';
 
 class CompleteProfileWidget extends StatefulWidget {
   const CompleteProfileWidget({Key? key}) : super(key: key);
@@ -21,138 +23,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
   TextEditingController? labelController;
   TextEditingController? topicController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? selectedValue = null;
-  final _dropdownFormKey = GlobalKey<FormState>();
-  // final animationsMap = {
-  //   'circleImageOnPageLoadAnimation': AnimationInfo(
-  //     curve: Curves.bounceOut,
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 19),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'textOnPageLoadAnimation1': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 50,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 20),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'textFieldOnPageLoadAnimation1': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 100,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 20),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'textFieldOnPageLoadAnimation2': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 200,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 40),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'textFieldOnPageLoadAnimation3': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 200,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 60),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'textOnPageLoadAnimation2': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 250,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 50),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'radioButtonOnPageLoadAnimation': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 300,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 50),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'buttonOnPageLoadAnimation1': AnimationInfo(
-  //     curve: Curves.bounceOut,
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 350,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 40),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  //   'buttonOnPageLoadAnimation2': AnimationInfo(
-  //     curve: Curves.bounceOut,
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     duration: 600,
-  //     delay: 400,
-  //     fadeIn: true,
-  //     initialState: AnimationState(
-  //       offset: Offset(0, 40),
-  //       opacity: 0,
-  //     ),
-  //     finalState: AnimationState(
-  //       offset: Offset(0, 0),
-  //       opacity: 1,
-  //     ),
-  //   ),
-  // };
+  String? selectedValue = "A";
 
   @override
   void initState() {
@@ -169,7 +40,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
       builder: ((context, appearanceState, child) => Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-              backgroundColor: Color(0xFF1A1F24),
+              backgroundColor: darkColorScaffoldTheme,
               automaticallyImplyLeading: false,
               leading: InkWell(
                 onTap: () async {
@@ -188,201 +59,145 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
               elevation: 0,
             ),
             body: Container(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 1,
-              decoration: BoxDecoration(
-                
-                color: Color(0xFF1A1F24),
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: Image.asset(
-                    'assets/images/page_background.png',
-                  ).image,
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fitWidth,
+                    image: Image.asset(
+                      'assets/images/page_background.png',
+                    ).image,
+                  ),
                 ),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/images/uiAvatar@2x.png',
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-                      child: TextFormField(
-                        controller: topicController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Topic',
-                          labelStyle: const TextStyle(
-                              fontFamily: 'Lexend Deca',
-                              color: Color.fromARGB(133, 255, 255, 255)),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    /*Couldn't decide might use later
+                    mainAxisAlignment: MainAxisAlignment.center,*/
+                    children: [
+                      Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                          child: TextFormField(
+                            controller: topicController,
+                            keyboardType: TextInputType.emailAddress,
+                            keyboardAppearance: appearanceState.isDarkMode
+                                ? Brightness.dark
+                                : Brightness.light,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              label: const Text('Topic'),
+                              hintText: 'topic/channel',
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
+                            validator: (topic) {
+                              if (topic!.isEmpty) {
+                                return null;
+                              }
+                              return 'Invalid Topic';
+                            },
+                          )),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                        child: TextFormField(
+                          controller: labelController,
+                          keyboardType: TextInputType.emailAddress,
+                          keyboardAppearance: appearanceState.isDarkMode
+                              ? Brightness.dark
+                              : Brightness.light,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            label: const Text('Label'),
+                            hintText: 'TempSensor',
                           ),
-                          hintText: 'arduino1/Temp',
-                          hintStyle: const TextStyle(
-                            fontFamily: 'Lexend Deca',
-                            color: Color(0x98FFFFFF),
-                          ),
-                          filled: true,
-                          fillColor: Color.fromRGBO(17, 20, 23, 100),
-                          contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
-                        ),
-                        style: TextStyle(
-                          fontFamily: 'Lexend Deca',
-                          color: appearanceState.isDarkMode
-                              ? darkColorTheme
-                              : lightColorTheme,
+                          validator: (Label) {
+                            if (Label!.isEmpty) {
+                              return null;
+                            }
+                            return 'Invalid Label';
+                          },
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-                      child: TextFormField(
-                        controller: labelController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Label',
-                          labelStyle: const TextStyle(
-                            fontFamily: 'Lexend Deca',
-                            color: Color.fromARGB(133, 255, 255, 255),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(141, 20, 20, 60),
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appearanceState.isDarkMode
+                                      ? Color.fromRGBO(51, 255, 236, 1)
+                                      : Color.fromRGBO(118, 98, 255, 1),
+                                ),
+                                borderRadius: BorderRadius.circular(8)),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: Color.fromRGBO(17, 20, 23, 100),
-                          contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
-                        ),
-                        style: TextStyle(
-                          fontFamily: 'Lexend Deca',
-                          color: appearanceState.isDarkMode
-                              ? darkColorTheme
-                              : lightColorTheme,
+                          validator: (value) =>
+                              value == null ? "Select a country" : null,
+                          value: selectedValue,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedValue = newValue!;
+                            });
+                          },
+                          items:
+                              <String>['A', 'B', 'C', 'D'].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(141, 20, 20, 0),
-                      child: DropdownButtonFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(17, 20, 23, 100)),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(17, 20, 23, 100)),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: Color.fromRGBO(17, 20, 23, 100),
-                        ),
-                        validator: (value) =>
-                            value == null ? "Select a country" : null,
-                        dropdownColor: Color.fromRGBO(17, 20, 23, 100),
-                        value: selectedValue,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedValue = newValue!;
-                          });
-                        },
-                        items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        style: TextStyle(color: Colors.white),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            height: 45,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
+                                if (true) {
+                                  //Temporary Until Services are done
+                                  Fluttertoast.showToast(
+                                      msg: "Connection Made",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor:
+                                          appearanceState.isDarkMode
+                                              ? darkColorTheme
+                                              : lightColorTheme,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                  Navigator.pushReplacementNamed(
+                                      context, '/main');
+                                } //Always true thus grayed out
+                                else {
+                                  Fluttertoast.showToast(
+                                      msg: "Connection Failed",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                }
+                              },
+                              child: const Text("Add Sensor"),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                    // Padding(
-                    //   padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    //   child: StreamBuilder<UsersRecord>(
-                    //     stream: UsersRecord.getDocument(currentUserReference),
-                    //     builder: (context, snapshot) {
-
-                    //       final buttonLoginUsersRecord = snapshot.data;
-                    //       return FFButtonWidget(
-                    //         onPressed: () async {
-                    //           final usersUpdateData = createUsersRecordData(
-                    //             displayName: yourNameController.text,
-                    //             age: int.parse(yourAgeController.text),
-                    //             ailments: ailmentsController.text,
-                    //             userSex: radioButtonValue,
-                    //           );
-                    //           await buttonLoginUsersRecord.reference
-                    //               .update(usersUpdateData);
-                    //           await Navigator.push(
-                    //             context,
-                    //             MaterialPageRoute(
-                    //               builder: (context) =>
-
-                    //             ),
-                    //           );
-                    //         },
-                    //         text: 'Complete Profile',
-                    //         options: FFButtonOptions(
-                    //           width: 230,
-                    //           height: 56,
-                    //           color: appearanceState.isDarkMode
-                    //                   ? darkColorTheme
-                    //                   : lightColorTheme,
-                    //           textStyle:
-                    //               TextStyle(
-                    //                     fontFamily: 'Lexend Deca',
-                    //                     color: Color(0x00000000),
-                    //                   ),
-                    //           elevation: 3,
-                    //           borderSide: BorderSide(
-                    //             color: Colors.transparent,
-                    //             width: 1,
-                    //           ),
-                    //           borderRadius: 8,
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
+                    ],
+                  ),
+                )),
           )),
     );
   }

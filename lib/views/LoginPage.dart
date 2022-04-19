@@ -128,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.white,
                             fontSize: 16.0
                           );
+                          Navigator.pushReplacementNamed(context, '/main');
                         }
                       },
                       child: const Text("Login"),),

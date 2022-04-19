@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
                   primarySwatch: darkColorTheme,
                   brightness: Brightness.dark,
                   scaffoldBackgroundColor: darkColorScaffoldTheme,
+                  inputDecorationTheme: InputDecorationTheme(),
                   bottomNavigationBarTheme: BottomNavigationBarThemeData(
                     backgroundColor: darkColorScaffoldTheme,
                   ),
