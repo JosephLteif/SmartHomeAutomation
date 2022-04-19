@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<AppearanceState>(
           builder: ((context, value, child) => MaterialApp(
-                title: 'Flutter Demo',
+                title: 'Smart Home',
                 theme: ThemeData(
                   brightness: Brightness.light,
                   primarySwatch: lightColorTheme,

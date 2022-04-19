@@ -17,6 +17,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var prefs;
+
+  init() async {
+    prefs = await SharedPreferences.getInstance();
+    if(prefs.getBool('isLoggedIn')??false){
+      Navigator.pushReplacementNamed(context, '/main');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    init();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<AppearanceState>(
@@ -97,9 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.white,
                             fontSize: 16.0
                           );
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setString('email', emailController.text);
                           prefs.setString('password', passwordController.text);
+                          prefs.setBool('isLoggedIn', true);
                           Navigator.pushReplacementNamed(context, '/main');
                         } else {
                           Fluttertoast.showToast(
