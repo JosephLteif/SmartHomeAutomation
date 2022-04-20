@@ -117,7 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                           prefs.setString('email', emailController.text);
                           prefs.setString('password', passwordController.text);
                           prefs.setBool('isLoggedIn', true);
-                          Navigator.pushReplacementNamed(context, '/main');
+                          prefs = await SharedPreferences.getInstance();
+                          if(prefs.getString('X-OPENHAB-TOKEN').toString() == ''){
+                            Navigator.pushReplacementNamed(context, '/setToken');
+                          } else {
+                            Navigator.pushReplacementNamed(context, '/main');
+                          }
                         } else {
                           Fluttertoast.showToast(
                             msg: "Login Failed",
