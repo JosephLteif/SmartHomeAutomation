@@ -2,17 +2,18 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smarthomeautomation/utils/labels.dart';
 
 class BaseInterceptor extends Interceptor {
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String username = await prefs.getString('email').toString();
-    String password = await prefs.getString('password').toString();
+    String username = await prefs.getString(prefs_email).toString();
+    String password = await prefs.getString(prefs_password).toString();
     var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
     options.headers.addAll(
       {
-        "X-OPENHAB-TOKEN": prefs.getString('X-OPENHAB-TOKEN').toString(),
+        "X-OPENHAB-TOKEN": prefs.getString(prefs_X_OPENHAB_TOKEN).toString(),
         'authorization': auth
       }
     );

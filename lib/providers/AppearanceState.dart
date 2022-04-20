@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smarthomeautomation/utils/labels.dart';
 
 class AppearanceState extends ChangeNotifier {
   bool _isDarkMode = false;
@@ -9,7 +10,7 @@ class AppearanceState extends ChangeNotifier {
 
   init() async{
     prefs = await SharedPreferences.getInstance();
-    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    _isDarkMode = prefs.getBool(prefs_IsDarkMode) ?? false;
     notifyListeners();
   }
 
@@ -20,7 +21,7 @@ class AppearanceState extends ChangeNotifier {
   void toggleDarkMode() async {
     _isDarkMode = !_isDarkMode;
     prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isDarkMode', _isDarkMode);
+    prefs.setBool(prefs_IsDarkMode, _isDarkMode);
     notifyListeners();
   }
 

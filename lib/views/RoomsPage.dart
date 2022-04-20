@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/OpenHabState.dart';
+import 'package:smarthomeautomation/utils/images.dart';
 
 import 'RoomsDetailsPage.dart';
 
@@ -27,7 +28,7 @@ class RoomsPage extends StatelessWidget {
                       children: [
                         ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(imageUrl: 'https://www.cpomagazine.com/wp-content/uploads/2019/10/smart-devices-leaking-data-to-tech-giants-raises-new-iot-privacy-issues_1500-1024x587.jpg')),
+                        child: CachedNetworkImage(imageUrl: img_LivingRoom)),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),

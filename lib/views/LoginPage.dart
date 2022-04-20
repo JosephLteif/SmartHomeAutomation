@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
+import 'package:smarthomeautomation/utils/labels.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -21,9 +22,9 @@ class _LoginPageState extends State<LoginPage> {
 
   init() async {
     prefs = await SharedPreferences.getInstance();
-    if(prefs.getString('X-OPENHAB-TOKEN').toString() == ''){
+    if(prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == ''){
       Navigator.pushReplacementNamed(context, '/setToken');
-    } else if(prefs.getBool('isLoggedIn')??false){
+    } else if(prefs.getBool(prefs_IsLoggedIn)??false){
       Navigator.pushReplacementNamed(context, '/main');
     }
   }
@@ -71,14 +72,14 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         ),
-                        label: const Text('Email'),
-                      hintText: 'johnDoe@hotmail.com',
+                        label: const Text(lbl_Email),
+                      hintText: lbl_PlaceHolderEmail,
                     ),
                     validator: (email){
                       if(email.isEmail || email!.isEmpty){
                         return null;
                       }
-                      return 'Invalid Email';
+                      return lbl_InvalidEmail;
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -91,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         ),
-                        label: const Text('password'),
-                      hintText: '********',
+                        label: const Text(lbl_Password),
+                      hintText: lbl_PlaceHolderPassword,
                     ),
                     obscureText: true,
                   ),
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                         FocusScope.of(context).unfocus();
                         if(await OpenHabService().checkAuthentication(emailController.text, passwordController.text)) {
                           Fluttertoast.showToast(
-                            msg: "Login Successfully",
+                            msg: lbl_LoginSuccess,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -114,18 +115,18 @@ class _LoginPageState extends State<LoginPage> {
                             textColor: Colors.white,
                             fontSize: 16.0
                           );
-                          prefs.setString('email', emailController.text);
-                          prefs.setString('password', passwordController.text);
-                          prefs.setBool('isLoggedIn', true);
+                          prefs.setString(prefs_email, emailController.text);
+                          prefs.setString(prefs_password, passwordController.text);
+                          prefs.setBool(prefs_IsLoggedIn, true);
                           prefs = await SharedPreferences.getInstance();
-                          if(prefs.getString('X-OPENHAB-TOKEN').toString() == ''){
+                          if(prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == ''){
                             Navigator.pushReplacementNamed(context, '/setToken');
                           } else {
                             Navigator.pushReplacementNamed(context, '/main');
                           }
                         } else {
                           Fluttertoast.showToast(
-                            msg: "Login Failed",
+                            msg: lbl_LoginFailed,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacementNamed(context, '/main');
                         }
                       },
-                      child: const Text("Login"),),
+                      child: const Text(lbl_Login),),
                     ],
                   ),
                   const Spacer(flex: 2,),

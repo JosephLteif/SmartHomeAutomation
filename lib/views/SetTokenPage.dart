@@ -39,25 +39,25 @@ class _SetTokenPageState extends State<SetTokenPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           ),
-                          label: const Text('Token'),
-                        hintText: 'oh.TokenName.gJydedDZU0ertwwertVy2dfsgdfgfdsagKykasdfadfghsdafgaJerwtu2NhCYixasdgadfgA',
+                          label: const Text(lbl_Token),
+                        hintText: lbl_Token_Placeholder,
                       ),
                       validator: (email){
                         if(email!.isNotEmpty){
-                          return 'Empty field';
+                          return lbl_Empty_Field;
                         }
                         return null;
                       },
                     ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    child: const Text('Set'),
+                    child: const Text(lbl_Set),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                      if(await prefs.setString('X-OPENHAB-TOKEN', _controller.text)){
+                      if(await prefs.setString(prefs_X_OPENHAB_TOKEN, _controller.text)){
                         Fluttertoast.showToast(
-                            msg: "Token Saved Successfully",
+                            msg: lbl_Token_Saved,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -70,7 +70,7 @@ class _SetTokenPageState extends State<SetTokenPage> {
                       Navigator.pushReplacementNamed(context, '/main');
                       } else {
                         Fluttertoast.showToast(
-                            msg: "Error Saving Token",
+                            msg: lbl_Error_Saving_Token,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
