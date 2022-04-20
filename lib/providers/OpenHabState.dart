@@ -3,7 +3,7 @@ import 'package:smarthomeautomation/models/ItemModel.dart';
 import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 
-class OpenHabState extends ChangeNotifier{
+class OpenHabState extends ChangeNotifier {
   List<Thing> _things = [];
   List<Thing> get things => _things;
 
@@ -16,30 +16,31 @@ class OpenHabState extends ChangeNotifier{
   final List<String> _rooms = [];
   List<String> get rooms => _rooms;
 
-  OpenHabState(){
+  OpenHabState() {
     update();
   }
 
-  update(){
+  update() {
     Fetchthings();
     Fetchitems();
   }
 
-  void Fetchthings() async{
+  void Fetchthings() async {
     _things.clear();
     _rooms.clear();
     _things = await OpenHabService().getThings();
     for (var thing in _things) {
-      String location = thing.location??'';
-      if(location!=''){
-        if(!_rooms.contains(location)){
+      String location = thing.location ?? '';
+      if (location != '') {
+        if (!_rooms.contains(location)) {
           _rooms.add(location);
         }
       }
     }
     notifyListeners();
   }
-  void Fetchitems() async{
+
+  void Fetchitems() async {
     _items.clear();
     _items = await OpenHabService().getItems();
     notifyListeners();
@@ -50,7 +51,7 @@ class OpenHabState extends ChangeNotifier{
       for (var channels in thing.channels!) {
         for (var linkeditem in channels.linkedItems) {
           for (var item in items) {
-            if(linkeditem == item.name){
+            if (linkeditem == item.name) {
               item.state = await OpenHabService().getItemState(linkeditem);
               notifyListeners();
             }
@@ -58,13 +59,12 @@ class OpenHabState extends ChangeNotifier{
         }
       }
     }
-    
   }
 
-  void selectThingsByLocation(String location){
+  void selectThingsByLocation(String location) {
     _selectedThings.clear();
     for (var thing in things) {
-      if(thing.label!="MQTT Broker" && thing.location == location){
+      if (thing.label != "MQTT Broker" && thing.location == location) {
         _selectedThings.add(thing);
       }
     }

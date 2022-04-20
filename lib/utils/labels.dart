@@ -14,7 +14,6 @@ const lbl_Set = "Set";
 const lbl_Empty_Field = "Empty Field";
 const lbl_Token_Placeholder = "Enter your token";
 
-
 const prefs_IsLoggedIn = 'isLoggedIn';
 const prefs_X_OPENHAB_TOKEN = 'X-OPENHAB-TOKEN';
 const prefs_email = 'email';

@@ -71,10 +71,10 @@ class OpenHabService {
     }
   }
 
-    Future postThing(Thing thing) async{
+  Future postThing(Thing thing) async {
     try {
       d.Response response = await d.Dio().post(thingsEndpoint);
-      if(response.statusCode == 201){
+      if (response.statusCode == 201) {
         return response.statusCode;
       } else {
         throw Exception(response.statusMessage);
@@ -84,10 +84,10 @@ class OpenHabService {
     }
   }
 
-  Future postItem(Item item) async{
+  Future postItem(Item item) async {
     try {
       d.Response response = await d.Dio().put(thingsEndpoint);
-      if(response.statusCode == 201){
+      if (response.statusCode == 201) {
         return response.statusCode;
       } else {
         throw Exception(response.statusMessage);
@@ -97,10 +97,10 @@ class OpenHabService {
     }
   }
 
-  Future putLink(String uuid,String itemName) async{
+  Future putLink(String uuid, String itemName) async {
     try {
       d.Response response = await d.Dio().put(linksEndpoint);
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         return response.statusCode;
       } else {
         throw Exception(response.statusMessage);

@@ -81,7 +81,7 @@ class Channels {
       this.configuration});
 
   Channels.fromJson(Map<String, dynamic> json) {
-    if(json['linkedItems'] != null) {
+    if (json['linkedItems'] != null) {
       linkedItems = [];
       json['linkedItems'].forEach((v) {
         linkedItems.add(v.toString());

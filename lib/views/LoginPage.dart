@@ -9,7 +9,7 @@ import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/utils/labels.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,9 +22,9 @@ class _LoginPageState extends State<LoginPage> {
 
   init() async {
     prefs = await SharedPreferences.getInstance();
-    if(prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == ''){
+    if (prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == '') {
       Navigator.pushReplacementNamed(context, '/setToken');
-    } else if(prefs.getBool(prefs_IsLoggedIn)??false){
+    } else if (prefs.getBool(prefs_IsLoggedIn) ?? false) {
       Navigator.pushReplacementNamed(context, '/main');
     }
   }
@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     init();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppearanceState>(
@@ -45,7 +46,9 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
               child: Column(
                 children: [
-                  const Spacer(flex: 1,),
+                  const Spacer(
+                    flex: 1,
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -58,25 +61,27 @@ class _LoginPageState extends State<LoginPage> {
                                   : lightColorTheme)),
                       const Text("Home",
                           style: TextStyle(
-                              fontSize: 38.0,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 38.0, fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  const Spacer(flex: 1,),
+                  const Spacer(
+                    flex: 1,
+                  ),
                   TextFormField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     keyboardAppearance: appearanceState.isDarkMode
-                              ? Brightness.dark:Brightness.light,
+                        ? Brightness.dark
+                        : Brightness.light,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        ),
-                        label: const Text(lbl_Email),
+                      ),
+                      label: const Text(lbl_Email),
                       hintText: lbl_PlaceHolderEmail,
                     ),
-                    validator: (email){
-                      if(email.isEmail || email!.isEmpty){
+                    validator: (email) {
+                      if (email.isEmail || email!.isEmpty) {
                         return null;
                       }
                       return lbl_InvalidEmail;
@@ -87,12 +92,13 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     keyboardAppearance: appearanceState.isDarkMode
-                              ? Brightness.dark:Brightness.light,
+                        ? Brightness.dark
+                        : Brightness.light,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        ),
-                        label: const Text(lbl_Password),
+                      ),
+                      label: const Text(lbl_Password),
                       hintText: lbl_PlaceHolderPassword,
                     ),
                     obscureText: true,
@@ -101,46 +107,54 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton(onPressed: () async {
-                        FocusScope.of(context).unfocus();
-                        if(await OpenHabService().checkAuthentication(emailController.text, passwordController.text)) {
-                          Fluttertoast.showToast(
-                            msg: lbl_LoginSuccess,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: appearanceState.isDarkMode
-                              ? darkColorTheme
-                              : lightColorTheme,
-                            textColor: Colors.white,
-                            fontSize: 16.0
-                          );
-                          prefs.setString(prefs_email, emailController.text);
-                          prefs.setString(prefs_password, passwordController.text);
-                          prefs.setBool(prefs_IsLoggedIn, true);
-                          prefs = await SharedPreferences.getInstance();
-                          if(prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == ''){
-                            Navigator.pushReplacementNamed(context, '/setToken');
+                      ElevatedButton(
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          if (await OpenHabService().checkAuthentication(
+                              emailController.text, passwordController.text)) {
+                            Fluttertoast.showToast(
+                                msg: lbl_LoginSuccess,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: appearanceState.isDarkMode
+                                    ? darkColorTheme
+                                    : lightColorTheme,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            prefs.setString(prefs_email, emailController.text);
+                            prefs.setString(
+                                prefs_password, passwordController.text);
+                            prefs.setBool(prefs_IsLoggedIn, true);
+                            prefs = await SharedPreferences.getInstance();
+                            if (prefs
+                                    .getString(prefs_X_OPENHAB_TOKEN)
+                                    .toString() ==
+                                '') {
+                              Navigator.pushReplacementNamed(
+                                  context, '/setToken');
+                            } else {
+                              Navigator.pushReplacementNamed(context, '/main');
+                            }
                           } else {
+                            Fluttertoast.showToast(
+                                msg: lbl_LoginFailed,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
                             Navigator.pushReplacementNamed(context, '/main');
                           }
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: lbl_LoginFailed,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0
-                          );
-                          Navigator.pushReplacementNamed(context, '/main');
-                        }
-                      },
-                      child: const Text(lbl_Login),),
+                        },
+                        child: const Text(lbl_Login),
+                      ),
                     ],
                   ),
-                  const Spacer(flex: 2,),
+                  const Spacer(
+                    flex: 2,
+                  ),
                 ],
               ),
             ),

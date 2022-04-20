@@ -15,13 +15,10 @@ class LoggingInterceptor extends Interceptor {
     return super.onResponse(response, handler);
   }
 
-    @override
+  @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     // TODO: implement onError
-    print(
-      err.error.toString()
-    );
+    print(err.error.toString());
     super.onError(err, handler);
   }
-  
 }

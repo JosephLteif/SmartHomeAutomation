@@ -8,7 +8,7 @@ class AppearanceState extends ChangeNotifier {
   bool get isDarkMode => _isDarkMode;
   var prefs;
 
-  init() async{
+  init() async {
     prefs = await SharedPreferences.getInstance();
     _isDarkMode = prefs.getBool(prefs_IsDarkMode) ?? false;
     notifyListeners();

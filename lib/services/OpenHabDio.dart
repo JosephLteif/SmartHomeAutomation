@@ -16,13 +16,13 @@ class OpenHabDio {
   }
 
   OpenHabDio._internal() {
-    // initialization logic 
+    // initialization logic
     _dio = Dio(
-          BaseOptions(
-      baseUrl: host,
-      connectTimeout: 15000,
-      receiveTimeout: 10000,
-    ),
+      BaseOptions(
+        baseUrl: host,
+        connectTimeout: 15000,
+        receiveTimeout: 10000,
+      ),
     )..interceptors.addAll([LoggingInterceptor(), BaseInterceptor()]);
   }
 }

@@ -51,14 +51,16 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
   @override
   void dispose() {
     // TODO: implement dispose
-    for (var element in timers) {element.cancel();}
+    for (var element in timers) {
+      element.cancel();
+    }
     super.dispose();
   }
 
   bool isFirstTime = true;
   @override
   Widget build(BuildContext context) {
-    if(isFirstTime){
+    if (isFirstTime) {
       Provider.of<OpenHabState>(context).selectThingsByLocation(widget.title);
       Provider.of<OpenHabState>(context).getSensorData();
     }
@@ -72,7 +74,10 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TopRowBar(title: widget.title, backArrow: true,),
+              TopRowBar(
+                title: widget.title,
+                backArrow: true,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: DataInfoBar(
@@ -84,7 +89,9 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                   icon3: Icons.power,
                 ),
               ),
-              const Spacer(flex: 1,),
+              const Spacer(
+                flex: 1,
+              ),
               Container(
                 height: width * 0.7,
                 width: width * 0.7,
@@ -172,7 +179,9 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                   ]),
                 ),
               ),
-              const Spacer(flex: 1,),
+              const Spacer(
+                flex: 1,
+              ),
               SizedBox(
                 height: 180,
                 child: ListView.builder(
@@ -181,26 +190,43 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       int number = index;
-                      if(isFirstTime){
-                        timers.add(Timer.periodic(const Duration(seconds: 10), (timer){
+                      if (isFirstTime) {
+                        timers.add(Timer.periodic(const Duration(seconds: 10),
+                            (timer) {
                           openhabState.getSensorData();
                         }));
                         isFirstTime = false;
                       }
-                      
+
                       return Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: CardElement(
                             color: colors[number],
                             icon: icons[number],
-                            title: openhabState.selectedThings.elementAt(index).label.toString(),
+                            title: openhabState.selectedThings
+                                .elementAt(index)
+                                .label
+                                .toString(),
                             unit: units[number],
-                            value: openhabState.items.firstWhere((element) => element.name.toString() == openhabState.selectedThings.elementAt(index).channels!.first.linkedItems.first.toString()).state.toString(),
+                            value: openhabState.items
+                                .firstWhere((element) =>
+                                    element.name.toString() ==
+                                    openhabState.selectedThings
+                                        .elementAt(index)
+                                        .channels!
+                                        .first
+                                        .linkedItems
+                                        .first
+                                        .toString())
+                                .state
+                                .toString(),
                             device: titles[number]),
                       );
                     }),
               ),
-              const Spacer(flex: 2,),
+              const Spacer(
+                flex: 2,
+              ),
             ],
           ),
         ),

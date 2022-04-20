@@ -7,57 +7,69 @@ import 'package:smarthomeautomation/utils/images.dart';
 import 'RoomsDetailsPage.dart';
 
 class RoomsPage extends StatelessWidget {
-  const RoomsPage({ Key? key }) : super(key: key);
+  const RoomsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<OpenHabState>(
       builder: (context, opanhabState, child) => Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ListView.builder(
+          body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: ListView.builder(
               itemCount: opanhabState.rooms.length,
               itemBuilder: ((context, index) => GestureDetector(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: ((context) => RoomsDetailsPage(title: opanhabState.rooms.elementAt(index),)))),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(imageUrl: img_LivingRoom)),
-                        Container(
-                          decoration: BoxDecoration(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => RoomsDetailsPage(
+                            title: opanhabState.rooms.elementAt(index),
+                          )))),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: CachedNetworkImage(imageUrl: img_LivingRoom)),
+                      Container(
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.black.withOpacity(0.8)]
-                              )
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.8)
+                                ])),
+                      ),
+                      Column(
+                        children: [
+                          const Spacer(
+                            flex: 3,
                           ),
-                        ),
-                        Column(
-                          children: [
-                            const Spacer(flex: 3,),
-                            Row(
-                              children: [
-                                const SizedBox(width: 20,),
-                                Text(opanhabState.rooms.elementAt(index), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),),
-                              ],
-                            ),
-                            const Spacer(flex: 1,),
-                          ],
-                        )
-                      ]
-                    ),
-                ))
-            )),
-          ),
-        )
-      ),
+                          Row(
+                            children: [
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                opanhabState.rooms.elementAt(index),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25),
+                              ),
+                            ],
+                          ),
+                          const Spacer(
+                            flex: 1,
+                          ),
+                        ],
+                      )
+                    ]),
+                  )))),
+        ),
+      )),
     );
   }
 }

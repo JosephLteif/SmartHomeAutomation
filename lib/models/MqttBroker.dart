@@ -1,4 +1,4 @@
-class MqttBroker{
+class MqttBroker {
   String host = "";
   int port = 0;
 
