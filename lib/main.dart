@@ -6,6 +6,7 @@ import 'package:smarthomeautomation/views/SetTokenPage.dart';
 import 'providers/OpenHabState.dart';
 import 'utils/colors.dart';
 import 'views/MainPage.dart';
+import 'views/PlaceHolderPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,12 +35,14 @@ class MyApp extends StatelessWidget {
                   primarySwatch: darkColorTheme,
                   brightness: Brightness.dark,
                   scaffoldBackgroundColor: darkColorScaffoldTheme,
-                  inputDecorationTheme: InputDecorationTheme(),
+                  inputDecorationTheme: const InputDecorationTheme(),
                   bottomNavigationBarTheme: BottomNavigationBarThemeData(
                     backgroundColor: darkColorScaffoldTheme,
                   ),
                 ),
                 themeMode: value.getThemeMode(),
+                onUnknownRoute: (settings) => MaterialPageRoute(
+                    builder: (context) => const PlaceHolderPage()),
                 routes: {
                   '/': (context) => const LoginPage(),
                   '/main': (context) => const MainPage(),
