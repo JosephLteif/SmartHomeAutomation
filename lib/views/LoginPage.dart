@@ -22,10 +22,16 @@ class _LoginPageState extends State<LoginPage> {
 
   init() async {
     prefs = await SharedPreferences.getInstance();
-    if (prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == '') {
-      Navigator.pushReplacementNamed(context, '/setToken');
-    } else if (prefs.getBool(prefs_IsLoggedIn) ?? false) {
-      Navigator.pushReplacementNamed(context, '/main');
+    if (prefs.getBool(prefs_IsLoggedIn) ?? false) {
+      if (prefs
+            .getString(prefs_X_OPENHAB_TOKEN)
+            .toString() ==
+        '' || prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
+      Navigator.pushReplacementNamed(
+          context, '/setToken');
+      } else{
+        Navigator.pushReplacementNamed(context, '/main');
+      }
     }
   }
 
@@ -130,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (prefs
                                     .getString(prefs_X_OPENHAB_TOKEN)
                                     .toString() ==
-                                '') {
+                                '' || prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
                               Navigator.pushReplacementNamed(
                                   context, '/setToken');
                             } else {
