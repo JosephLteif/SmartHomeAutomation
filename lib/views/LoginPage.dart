@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 fontSize: 16.0);
-                            Navigator.pushReplacementNamed(context, '/main');
+                            
                           }
                         },
                         child: const Text(lbl_Login),

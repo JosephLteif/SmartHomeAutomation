@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 
 import '../services/OpenHabService.dart';
+import '../models/addSensorModel.dart';
 
 class CompleteProfileWidget extends StatefulWidget {
   const CompleteProfileWidget({Key? key}) : super(key: key);
@@ -19,25 +20,19 @@ class CompleteProfileWidget extends StatefulWidget {
 class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
     with TickerProviderStateMixin {
   String? radioButtonValue;
-  TextEditingController? ailmentsController;
-  TextEditingController? labelController;
-  TextEditingController? topicController;
+  TextEditingController locationController = TextEditingController();
+  TextEditingController labelController = TextEditingController();
+  TextEditingController topicController = TextEditingController();
+
+  addSensorModel sensor = addSensorModel();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String? selectedValue = "A";
-
-  @override
-  void initState() {
-    super.initState();
-
-    ailmentsController = TextEditingController();
-    labelController = TextEditingController();
-    topicController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppearanceState>(
       builder: ((context, appearanceState, child) => Scaffold(
+            resizeToAvoidBottomInset: false,
             key: scaffoldKey,
             appBar: AppBar(
               backgroundColor: darkColorScaffoldTheme,
@@ -60,14 +55,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
             ),
             body: Container(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    image: Image.asset(
-                      'assets/images/page_background.png',
-                    ).image,
-                  ),
-                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -163,7 +150,14 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                             child: ElevatedButton(
                               onPressed: () async {
                                 FocusScope.of(context).unfocus();
-                                if (true) {
+                                sensor.Label = labelController.text.toString();
+                                sensor.Topic = topicController.text.toString();
+                                sensor.Type = selectedValue;
+                                
+                                print(sensor.Label);
+                                print(sensor.Topic);
+                                print(sensor.Type);
+                                if (await OpenHabService().createProcess(sensor)) {
                                   //Temporary Until Services are done
                                   Fluttertoast.showToast(
                                       msg: "Connection Made",
