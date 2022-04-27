@@ -82,10 +82,10 @@ class OpenHabService {
         label: sensor.Label,
         bridgeUID: "mqtt:broker:3a7d3daa6f",
         thingTypeUID: "mqtt:topic",
-        location: "Your HOUSE BITCH",
+        location: sensor.Location,
         channels: []);
-    ChannelsAdd channel = new ChannelsAdd();
-    AddItem item = new AddItem();
+    ChannelsAdd channel = ChannelsAdd();
+    AddItem item = AddItem();
     List<String> x = thing.bridgeUID!.split(":");
     Configuration conf = Configuration();
     Functions fun = Functions();
@@ -105,7 +105,7 @@ class OpenHabService {
 
     thing.channels!.add(channel);
     if (await OpenHabService().postThing(thing) == 201) {
-      item.label = "L" + sensor.Label!;
+      item.label = sensor.Label!;
       item.type = "String";
       item.name = sensor.Label;
       item.category = sensor.Type;
