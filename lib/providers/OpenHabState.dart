@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:smarthomeautomation/models/ItemModel.dart';
+import 'package:smarthomeautomation/models/MqttBroker.dart';
 import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 
@@ -15,6 +18,10 @@ class OpenHabState extends ChangeNotifier {
 
   final List<String> _rooms = [];
   List<String> get rooms => _rooms;
+
+  MqttBroker mqttBroker = MqttBroker();
+
+  late MqttServerClient client;
 
   OpenHabState() {
     update();
@@ -35,6 +42,16 @@ class OpenHabState extends ChangeNotifier {
         if (!_rooms.contains(location)) {
           _rooms.add(location);
         }
+      }
+      if(thing.label == "MQTT Broker"){
+        dynamic temp = thing.configuration;
+        // mqttBroker.host = 'broker.hivemq.com';
+        // mqttBroker.port = 1883;
+        mqttBroker.host = '${temp["host"]}';
+        mqttBroker.port = temp["port"];
+        mqttBroker.UID = thing.uID.toString();
+        client = MqttServerClient.withPort(mqttBroker.host, 'client-1', mqttBroker.port);
+        await connect();
       }
     }
     notifyListeners();
@@ -69,5 +86,70 @@ class OpenHabState extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  Future<MqttServerClient> connect() async {
+    client.logging(on: true);
+    client.onConnected = onConnected;
+    client.onDisconnected = onDisconnected;
+    client.onSubscribed = onSubscribed;
+    client.onSubscribeFail = onSubscribeFail;
+    client.pongCallback = pong;
+    client.onUnsubscribed = onUnsubscribed;
+    client.autoReconnect = false;
+
+    final connMessage = MqttConnectMessage()
+    .authenticateAs("joe", "123")
+    .withClientIdentifier('client-1');
+    client.connectionMessage = connMessage;
+    try {
+      await client.connect();
+    } catch (e) {
+      print('Exception: $e');
+      client.disconnect();
+    }
+
+    return client;
+  }
+
+  void subscribeToTopic(String topic) {
+    client.subscribe(topic, MqttQos.exactlyOnce);
+  }
+
+  // connection succeeded
+  void onConnected() {
+    print('Connected');
+  }
+
+  // unconnected
+  void onDisconnected() {
+    print('Disconnected');
+  }
+
+  // subscribe to topic succeeded
+  void onSubscribed(String topic) {
+    print('Subscribed topic: $topic');
+  }
+
+  // subscribe to topic failed
+  void onSubscribeFail(String topic) {
+    print('Failed to subscribe $topic');
+  }
+
+  // unsubscribe succeeded
+  void onUnsubscribed(String? topic) {
+    print('Unsubscribed topic: $topic');
+    client.unsubscribe(topic!);
+  }
+
+  // PING response received
+  void pong() {
+    print('Ping response client callback invoked');
+  }
+
+  void publishMessage(String topic, String message) {
+    final builder = MqttClientPayloadBuilder();
+    builder.addString(message);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
   }
 }

@@ -182,8 +182,15 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
               const Spacer(
                 flex: 1,
               ),
-              SizedBox(
+              openhabState.selectedThings.isEmpty?
+              const SizedBox(
                 height: 180,
+                child: Center(
+                  child: Text("No Things in this Room"),
+                ),
+              ):
+              SizedBox(
+                height: 206,
                 child: ListView.builder(
                     itemCount: openhabState.selectedThings.length,
                     shrinkWrap: true,
@@ -198,29 +205,45 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                         isFirstTime = false;
                       }
 
+                      bool tempbool = false;
                       return Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: CardElement(
-                            color: colors[number],
-                            icon: icons[number],
-                            title: openhabState.selectedThings
-                                .elementAt(index)
-                                .label
-                                .toString(),
-                            unit: units[number],
-                            value: openhabState.items
-                                .firstWhere((element) =>
-                                    element.name.toString() ==
-                                    openhabState.selectedThings
-                                        .elementAt(index)
-                                        .channels!
-                                        .first
-                                        .linkedItems
-                                        .first
-                                        .toString())
-                                .state
-                                .toString(),
-                            device: titles[number]),
+                        child: Column(
+                          children: [
+                            CardElement(
+                                color: colors[number],
+                                icon: icons[number],
+                                title: openhabState.selectedThings
+                                    .elementAt(index)
+                                    .label
+                                    .toString(),
+                                unit: units[number],
+                                value: openhabState.items
+                                    .firstWhere((element) =>
+                                        element.name.toString() ==
+                                        openhabState.selectedThings
+                                            .elementAt(index)
+                                            .channels!
+                                            .first
+                                            .linkedItems
+                                            .first
+                                            .toString())
+                                    .state
+                                    .toString(),
+                                device: titles[number]),
+                                Switch(value: tempbool, onChanged: (value){
+                                  tempbool = value;
+                                  if(tempbool){
+                                    // openhabState.publishMessage(openhabState.selectedThings
+                                    // .elementAt(index).channels!.first.configuration['stateTopic'].toString(), "U");
+                                    openhabState.publishMessage("arduino_1/Light_Sensitivity_Sensor", "U");
+                                  } else {
+                                    openhabState.publishMessage(openhabState.selectedThings
+                                    .elementAt(index).channels!.first.configuration['stateTopic'].toString(), "D");
+                                  }
+                                }),
+                          ],
+                        ),
                       );
                     }),
               ),

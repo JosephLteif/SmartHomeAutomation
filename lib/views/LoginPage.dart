@@ -4,6 +4,7 @@ import 'package:fleasy/fleasy.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
+import 'package:smarthomeautomation/providers/OpenHabState.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
 import 'package:smarthomeautomation/utils/labels.dart';
