@@ -187,7 +187,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                   sensor.Label = labelController.text.toString();
                                   sensor.Topic = topicController.text.toString();
                                   sensor.Type = selectedValue;
-                                  sensor.Location = locationController.text.toString();
+                                  sensor.Location = selectedRoom;
                                   if (await OpenHabService().createProcess(sensor)) {
                                     //Temporary Until Services are done
                                     Fluttertoast.showToast(

@@ -91,7 +91,7 @@ class OpenHabService {
     Functions fun = Functions();
     List<String> s = ["stuff"];
 
-    channel.uid = thing.thingTypeUID! + ":" + x[2] + ":" + "AFasfgag" + ":"  + sensor.Label!;
+    channel.uid = thing.thingTypeUID! + ":" + x[2] + ":" + sensor.Label! + "123" + ":"  + sensor.Label!;
     channel.channelTypeUID = "mqtt:string";
     channel.label = sensor.Label;
     channel.id = sensor.Label;
