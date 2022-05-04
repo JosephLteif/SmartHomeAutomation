@@ -51,6 +51,7 @@ class OpenHabState extends ChangeNotifier {
         mqttBroker.port = temp["port"];
         mqttBroker.UID = thing.uID.toString();
         client = MqttServerClient.withPort(mqttBroker.host, 'client-1', mqttBroker.port);
+        
         await connect();
       }
     }

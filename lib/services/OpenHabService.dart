@@ -8,6 +8,7 @@ import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/models/ThingModelAdd.dart';
 import 'package:smarthomeautomation/models/addSensorModel.dart';
 import 'package:smarthomeautomation/utils/endpoint.dart';
+import 'package:smarthomeautomation/providers/OpenHabState.dart';
 
 import '../models/ItemModelAdd.dart';
 import 'OpenHabDio.dart';
@@ -91,7 +92,7 @@ class OpenHabService {
     Functions fun = Functions();
     List<String> s = ["stuff"];
 
-    channel.uid = thing.thingTypeUID! + ":" + x[2] + ":" + sensor.Label! + "123" + ":"  + sensor.Label!;
+    channel.uid = thing.thingTypeUID! + ":" + x[2] + ":" + sensor.Label! + ":"  + sensor.Label! + "item";
     channel.channelTypeUID = "mqtt:string";
     channel.label = sensor.Label;
     channel.id = sensor.Label;
@@ -100,13 +101,13 @@ class OpenHabService {
     conf.stateTopic = sensor.Topic;
     channel.configuration= conf;
     channel.kind = "STATE";
-    channel.itemType = sensor.Type;
+    channel.itemType = "String";
     thing.uID = thing.thingTypeUID! + ":" +  x[2] + ":" + sensor.Label!;
 
     thing.channels!.add(channel);
     if (await OpenHabService().postThing(thing) == 201) {
       item.label = sensor.Label!;
-      item.type = "String";
+      item.type = "Number";
       item.name = sensor.Label;
       item.category = sensor.Type;
       item.groupNames = ["string"];
@@ -120,6 +121,7 @@ class OpenHabService {
       print(item.toJson());
       if (await OpenHabService().putItem(item) == 201) {
         if (await OpenHabService().putLink(channel.uid!, item.name!) == 200) {
+          
           return true;
         }
       }

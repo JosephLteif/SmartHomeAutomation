@@ -183,12 +183,14 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                               height: 45,
                               child: ElevatedButton(
                                 onPressed: () async {
+                                  
                                   FocusScope.of(context).unfocus();
                                   sensor.Label = labelController.text.toString();
                                   sensor.Topic = topicController.text.toString();
                                   sensor.Type = selectedValue;
                                   sensor.Location = selectedRoom;
                                   if (await OpenHabService().createProcess(sensor)) {
+                                    openhabState.update();
                                     //Temporary Until Services are done
                                     Fluttertoast.showToast(
                                         msg: "Connection Made",
