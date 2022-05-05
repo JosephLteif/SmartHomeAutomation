@@ -11,7 +11,7 @@ import '../providers/AddSensorState.dart';
 import 'AddSensorPage.dart';
 
 class QRScannerPage extends StatefulWidget {
-  QRScannerPage({ Key? key }) : super(key: key);
+  QRScannerPage({Key? key}) : super(key: key);
 
   @override
   State<QRScannerPage> createState() => _QRScannerPageState();
@@ -24,36 +24,33 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
   QRViewController? controller;
 
-    void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-
-        result = scanData;
-        dynamic data = jsonDecode(result!.code.toString());
-        Provider.of<AddSensorState>(context, listen: false).FillFromQRCode(data);
-        dispose();
-        Fluttertoast.showToast(
-                                        msg: "Qr Scanned",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            Provider.of<AppearanceState>(context, listen: false).isDarkMode
-                                                ? darkColorTheme
-                                                : lightColorTheme,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-        Navigator.popUntil(context, ModalRoute.withName('/main'));
-        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CompleteProfileWidget()),
-                              );
+      result = scanData;
+      dynamic data = jsonDecode(result!.code.toString());
+      Provider.of<AddSensorState>(context, listen: false).FillFromQRCode(data);
+      dispose();
+      Fluttertoast.showToast(
+          msg: "Qr Scanned",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor:
+              Provider.of<AppearanceState>(context, listen: false).isDarkMode
+                  ? darkColorTheme
+                  : lightColorTheme,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      Navigator.popUntil(context, ModalRoute.withName('/main'));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CompleteProfileWidget()),
+      );
     });
   }
 
-    @override
+  @override
   void dispose() {
     controller?.dispose();
     super.dispose();
@@ -65,9 +62,8 @@ class _QRScannerPageState extends State<QRScannerPage> {
       body: QRView(
         overlay: QrScannerOverlayShape(borderColor: Colors.red),
         key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
+        onQRViewCreated: _onQRViewCreated,
+      ),
     );
-    
   }
 }

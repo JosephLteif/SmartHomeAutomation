@@ -24,13 +24,10 @@ class _LoginPageState extends State<LoginPage> {
   init() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs.getBool(prefs_IsLoggedIn) ?? false) {
-      if (prefs
-            .getString(prefs_X_OPENHAB_TOKEN)
-            .toString() ==
-        '' || prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
-      Navigator.pushReplacementNamed(
-          context, '/setToken');
-      } else{
+      if (prefs.getString(prefs_X_OPENHAB_TOKEN).toString() == '' ||
+          prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
+        Navigator.pushReplacementNamed(context, '/setToken');
+      } else {
         Navigator.pushReplacementNamed(context, '/main');
       }
     }
@@ -135,9 +132,11 @@ class _LoginPageState extends State<LoginPage> {
                             prefs.setBool(prefs_IsLoggedIn, true);
                             prefs = await SharedPreferences.getInstance();
                             if (prefs
-                                    .getString(prefs_X_OPENHAB_TOKEN)
-                                    .toString() ==
-                                '' || prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
+                                        .getString(prefs_X_OPENHAB_TOKEN)
+                                        .toString() ==
+                                    '' ||
+                                prefs.getString(prefs_X_OPENHAB_TOKEN) ==
+                                    null) {
                               Navigator.pushReplacementNamed(
                                   context, '/setToken');
                             } else {
@@ -152,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 fontSize: 16.0);
-                            
                           }
                         },
                         child: const Text(lbl_Login),

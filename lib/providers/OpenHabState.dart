@@ -43,15 +43,16 @@ class OpenHabState extends ChangeNotifier {
           _rooms.add(location);
         }
       }
-      if(thing.label == "MQTT Broker"){
+      if (thing.label == "MQTT Broker") {
         dynamic temp = thing.configuration;
         // mqttBroker.host = 'broker.hivemq.com';
         // mqttBroker.port = 1883;
         mqttBroker.host = '${temp["host"]}';
         mqttBroker.port = temp["port"];
         mqttBroker.UID = thing.uID.toString();
-        client = MqttServerClient.withPort(mqttBroker.host, 'client-1', mqttBroker.port);
-        
+        client = MqttServerClient.withPort(
+            mqttBroker.host, 'client-1', mqttBroker.port);
+
         await connect();
       }
     }
@@ -100,8 +101,8 @@ class OpenHabState extends ChangeNotifier {
     client.autoReconnect = false;
 
     final connMessage = MqttConnectMessage()
-    .authenticateAs("joe", "123")
-    .withClientIdentifier('client-1');
+        .authenticateAs("joe", "123")
+        .withClientIdentifier('client-1');
     client.connectionMessage = connMessage;
     try {
       await client.connect();

@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -92,17 +91,24 @@ class OpenHabService {
     Functions fun = Functions();
     List<String> s = ["stuff"];
 
-    channel.uid = thing.thingTypeUID! + ":" + x[2] + ":" + sensor.Label! + ":"  + sensor.Label! + "item";
+    channel.uid = thing.thingTypeUID! +
+        ":" +
+        x[2] +
+        ":" +
+        sensor.Label! +
+        ":" +
+        sensor.Label! +
+        "item";
     channel.channelTypeUID = "mqtt:string";
     channel.label = sensor.Label;
     channel.id = sensor.Label;
     channel.description = "stuff";
     channel.defaultTags = s;
     conf.stateTopic = sensor.Topic;
-    channel.configuration= conf;
+    channel.configuration = conf;
     channel.kind = "STATE";
     channel.itemType = "String";
-    thing.uID = thing.thingTypeUID! + ":" +  x[2] + ":" + sensor.Label!;
+    thing.uID = thing.thingTypeUID! + ":" + x[2] + ":" + sensor.Label!;
 
     thing.channels!.add(channel);
     if (await OpenHabService().postThing(thing) == 201) {
@@ -116,12 +122,10 @@ class OpenHabService {
       fun.name = "string";
       fun.params = ["string"];
       item.function = fun;
-      
 
       print(item.toJson());
       if (await OpenHabService().putItem(item) == 201) {
         if (await OpenHabService().putLink(channel.uid!, item.name!) == 200) {
-          
           return true;
         }
       }

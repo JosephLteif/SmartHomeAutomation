@@ -30,7 +30,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
   String? selectedValue = "A";
   String? selectedRoom;
 
-@override
+  @override
   void dispose() {
     // TODO: implement dispose
     Provider.of<AddSensorState>(context, listen: false).clear();
@@ -40,8 +40,8 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
   Widget build(BuildContext context) {
     return Consumer<AppearanceState>(
       builder: ((context, appearanceState, child) => Consumer<OpenHabState>(
-        builder: (context, openhabState, child) => Consumer<AddSensorState>(
-          builder: (context, addSensorState, child) => Scaffold(
+            builder: (context, openhabState, child) => Consumer<AddSensorState>(
+              builder: (context, addSensorState, child) => Scaffold(
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
                   backgroundColor: darkColorScaffoldTheme,
@@ -71,14 +71,16 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                           const Spacer(),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: IconButton(icon: const Icon(Icons.qr_code_rounded), onPressed: () {
-                              Navigator.pushNamed(context, '/qrscanner');
-                            }),
+                            child: IconButton(
+                                icon: const Icon(Icons.qr_code_rounded),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/qrscanner');
+                                }),
                           ),
                           const Spacer(),
                           Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 0),
                               child: TextFormField(
                                 initialValue: addSensorState.getTopic(),
                                 keyboardType: TextInputType.emailAddress,
@@ -91,7 +93,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                   ),
                                   label: const Text('Topic'),
                                   hintText: 'topic/channel',
-
                                 ),
                                 validator: (topic) {
                                   if (topic!.isEmpty) {
@@ -101,7 +102,8 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                 },
                               )),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 20, 20, 0),
                             child: TextFormField(
                               initialValue: addSensorState.getLabel(),
                               keyboardType: TextInputType.emailAddress,
@@ -124,14 +126,17 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 20, 20, 0),
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: appearanceState.isDarkMode
-                                          ? const Color.fromRGBO(51, 255, 236, 1)
-                                          : const Color.fromRGBO(118, 98, 255, 1),
+                                          ? const Color.fromRGBO(
+                                              51, 255, 236, 1)
+                                          : const Color.fromRGBO(
+                                              118, 98, 255, 1),
                                     ),
                                     borderRadius: BorderRadius.circular(8)),
                                 border: OutlineInputBorder(
@@ -146,8 +151,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                   selectedRoom = newValue!;
                                 });
                               },
-                              items:
-                                  openhabState.rooms.map((String value) {
+                              items: openhabState.rooms.map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -156,15 +160,17 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(141, 20, 20, 60),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                141, 20, 20, 60),
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: appearanceState.isDarkMode
-                                          ? const Color.fromRGBO(51, 255, 236, 1)
-                                          : const Color.fromRGBO(118, 98, 255, 1),
+                                          ? const Color.fromRGBO(
+                                              51, 255, 236, 1)
+                                          : const Color.fromRGBO(
+                                              118, 98, 255, 1),
                                     ),
                                     borderRadius: BorderRadius.circular(8)),
                                 border: OutlineInputBorder(
@@ -179,8 +185,8 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                   selectedValue = newValue!;
                                 });
                               },
-                              items:
-                                  <String>['A', 'B', 'C', 'D'].map((String value) {
+                              items: <String>['A', 'B', 'C', 'D']
+                                  .map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -197,13 +203,15 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                 height: 45,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    
                                     FocusScope.of(context).unfocus();
-                                    sensor.Label = labelController.text.toString();
-                                    sensor.Topic = topicController.text.toString();
+                                    sensor.Label =
+                                        labelController.text.toString();
+                                    sensor.Topic =
+                                        topicController.text.toString();
                                     sensor.Type = selectedValue;
                                     sensor.Location = selectedRoom;
-                                    if (await OpenHabService().createProcess(sensor)) {
+                                    if (await OpenHabService()
+                                        .createProcess(sensor)) {
                                       openhabState.update();
                                       //Temporary Until Services are done
                                       Fluttertoast.showToast(
@@ -236,13 +244,15 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                               )
                             ],
                           ),
-                          const Spacer(flex: 4,),
+                          const Spacer(
+                            flex: 4,
+                          ),
                         ],
                       ),
                     )),
               ),
-        ),
-      )),
+            ),
+          )),
     );
   }
 }
