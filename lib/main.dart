@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smarthomeautomation/providers/AddSensorState.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/views/LoginPage.dart';
+import 'package:smarthomeautomation/views/QRScannerPage.dart';
 import 'package:smarthomeautomation/views/SetTokenPage.dart';
 import 'providers/OpenHabState.dart';
 import 'utils/colors.dart';
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
               create: (context) => AppearanceState()),
           ChangeNotifierProvider<OpenHabState>(
               create: (context) => OpenHabState()),
+          ChangeNotifierProvider<AddSensorState>(
+              create: (context) => AddSensorState()),
         ],
         child: Consumer<AppearanceState>(
           builder: ((context, value, child) => MaterialApp(
@@ -47,6 +51,7 @@ class MyApp extends StatelessWidget {
                   '/': (context) => const LoginPage(),
                   '/main': (context) => const MainPage(),
                   '/setToken': (context) => SetTokenPage(),
+                  '/qrscanner': (context) => QRScannerPage(),
                 },
               )),
         ));
