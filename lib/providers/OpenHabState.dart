@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:smarthomeautomation/models/ChartDataModel.dart';
 import 'package:smarthomeautomation/models/ItemModel.dart';
 import 'package:smarthomeautomation/models/MqttBroker.dart';
 import 'package:smarthomeautomation/models/ThingModel.dart';
@@ -153,5 +154,9 @@ class OpenHabState extends ChangeNotifier {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
     client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+  }
+
+  Future<List<ChartDataModel>> getPersistenceByName(String name) async {
+    return await OpenHabService().getPersistenceByName(name);
   }
 }

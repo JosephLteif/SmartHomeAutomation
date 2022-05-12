@@ -4,3 +4,4 @@ const String itemsEndpoint = "/items";
 const String itemStateEndpoint = "/items/{itemname}/state";
 const String uuidEndpoint = "/uuid";
 const String linksEndpoint = "/links";
+const String persistenceEndpoint = "/persistence/items/{itemname}";
