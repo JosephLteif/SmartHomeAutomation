@@ -26,24 +26,28 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
     const Color(0xFF14c3b5),
     const Color(0xFFf26889),
     const Color(0xFFe27061),
+    Color.fromARGB(255, 255, 199, 31),
   ];
   List<IconData> icons = [
     Icons.home,
     Icons.water_drop_outlined,
     Icons.thermostat,
     Icons.camera,
+    Icons.light
   ];
   List<String> titles = [
     "Home",
     "Water Level",
     "Temperature",
     "Security",
+    "Light"
   ];
   List<String> units = [
     "Rooms",
     "Liters",
     "°C",
     "CCTV Cameras",
+    ""
   ];
 
   List<Timer> timers = [];
@@ -196,7 +200,35 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            int number = index;
+                            int number;
+                            bool canSendData = false;
+                            switch (openhabState.items
+                                          .firstWhere((element) =>
+                                              element.name.toString() ==
+                                              openhabState.selectedThings
+                                                  .elementAt(index)
+                                                  .channels!
+                                                  .first
+                                                  .linkedItems
+                                                  .first
+                                                  .toString()).category) {
+                              case 'temperature':
+                                number = 2;
+                                canSendData = true;
+                                break;
+                              case 'water':
+                                number = 1;
+                                canSendData = false;
+                                break;
+                              case 'light':
+                                number = 4;
+                                canSendData = true;
+                                break;
+                              default:
+                                number = 0;
+                                break;
+                            }
+
                             if (isFirstTime) {
                               timers.add(Timer.periodic(
                                   const Duration(seconds: 10), (timer) {
@@ -231,15 +263,18 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                                           .state
                                           .toString(),
                                       device: titles[number]),
-                                  Switch(
+                                  canSendData?Switch(
                                       value: tempbool,
                                       onChanged: (value) {
                                         tempbool = value;
                                         if (tempbool) {
-                                          // openhabState.publishMessage(openhabState.selectedThings
-                                          // .elementAt(index).channels!.first.configuration['stateTopic'].toString(), "U");
                                           openhabState.publishMessage(
-                                              "arduino_1/Light_Sensitivity_Sensor",
+                                              openhabState.selectedThings
+                                                  .elementAt(index)
+                                                  .channels!
+                                                  .first
+                                                  .configuration['stateTopic']
+                                                  .toString(),
                                               "U");
                                         } else {
                                           openhabState.publishMessage(
@@ -251,7 +286,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                                                   .toString(),
                                               "D");
                                         }
-                                      }),
+                                      }):Container(),
                                 ],
                               ),
                             );

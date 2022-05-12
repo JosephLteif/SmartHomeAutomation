@@ -7,7 +7,6 @@ import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/models/ThingModelAdd.dart';
 import 'package:smarthomeautomation/models/addSensorModel.dart';
 import 'package:smarthomeautomation/utils/endpoint.dart';
-import 'package:smarthomeautomation/providers/OpenHabState.dart';
 
 import '../models/ItemModelAdd.dart';
 import 'OpenHabDio.dart';
@@ -115,7 +114,7 @@ class OpenHabService {
       item.label = sensor.Label!;
       item.type = "Number";
       item.name = sensor.Label;
-      item.category = sensor.Type;
+      item.category = sensor.Type!.toLowerCase();
       item.groupNames = ["string"];
       item.tags = ["string"];
       item.groupType = "string";

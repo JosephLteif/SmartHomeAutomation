@@ -20,10 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // if(!didUpdate) {
-    //   Provider.of<OpenHabState>(context).update();
-    //   didUpdate = true;
-    // }
     return Consumer<AppearanceState>(
       builder: ((context, appearanceState, child) => Consumer<OpenHabState>(
             builder: (context, openhabState, child) => Scaffold(
