@@ -30,6 +30,7 @@ class CardElement extends StatefulWidget {
 
 class _CardElementState extends State<CardElement> {
       List<ChartDataModel> dataItems = [];
+      late Timer timer;
 
     init() async {
       dataItems = await Provider.of<OpenHabState>(context, listen: false).getPersistenceByName(widget.title);
@@ -42,10 +43,18 @@ class _CardElementState extends State<CardElement> {
     initState() {
       super.initState();
       init();
-      Timer.periodic(Duration(seconds: 10), (timer) {
+      timer = Timer.periodic(Duration(seconds: 10), (timer) {
         init();
       });
     }
+
+    @override
+  void dispose() {
+    // TODO: implement dispose
+    timer.cancel();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
