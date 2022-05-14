@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:math';
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/models/ChartDataModel.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/providers/OpenHabState.dart';
-import 'package:smarthomeautomation/views/TestCategoryPage.dart';
 
 class CardElement extends StatefulWidget {
   String title, unit, value, device;
@@ -63,9 +59,11 @@ class _CardElementState extends State<CardElement> {
   @override
   Widget build(BuildContext context) {
     if(isFirstTime){
-      timer = Timer.periodic(const Duration(seconds: 60), (timer) {
-        init();
-      });
+      if(!widget.isRoom) {
+        timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+          init();
+        });
+      }
       isFirstTime = false;
       isDarkMode = Provider.of<AppearanceState>(context, listen: false).isDarkMode;
     }
@@ -122,61 +120,32 @@ class _CardElementState extends State<CardElement> {
             const Spacer(
               flex: 1,
             ),
-            dataItems.length!=0?
-            Flexible(
-              child: LineChart(LineChartData(
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(
-                  show: false,
+            if(widget.isRoom)
+              if(widget.title == 'Temperature' || widget.device == 'Temperature')
+                Expanded(
+                  child:
+                  Center(
+                    child: 
+                      double.parse(widget.value) > 30 ?
+                      const Icon(Icons.sunny, size: 50,) : 
+                      double.parse(widget.value) < 23 ? 
+                      const Icon(Icons.cloudy_snowing, size: 50,): 
+                      const Icon(Icons.cloud, size: 50,)
+                  )
+                )
+                else if(widget.title == 'Light' || widget.device == 'Light')
+                 GridView.builder(
+                   shrinkWrap: true,
+                   itemCount: int.parse(widget.value),
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.light))
+                else if(widget.title == 'Security' || widget.device == 'Security')
+                 GridView.builder(
+                   shrinkWrap: true,
+                   itemCount: int.parse(widget.value),
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.camera)),
+                const Spacer(
+                  flex: 2,
                 ),
-                borderData: FlBorderData(
-                    show: false,
-                    border:
-                        Border.all(color: const Color(0xff37434d), width: 1)),
-                minX: 0, //lowest value in the x axis
-                maxX: dataItems.length.toDouble(), //highest value in the x axis
-                minY: -10, //lowest value in the y axis
-                maxY: dataItems.reduce((current, next) => current.y > next.y ? current : next).y.toDouble() + 10 , //highest value in the y axis
-                lineBarsData: [
-                  LineChartBarData(
-                    // spots: const [
-                    //   FlSpot(0, 8),
-                    //   FlSpot(2.6, 1),
-                    //   FlSpot(4.9, 20),
-                    //   FlSpot(6.8, 12),
-                    //   FlSpot(8, 4),
-                    //   FlSpot(9.5, 20),
-                    //   FlSpot(11, 4),
-                    // ],
-                    spots: dataItems
-                        .map((e) => FlSpot(dataItems.indexOf(e).toDouble(), e.y))
-                        .toList(),
-                    isCurved: true,
-                    gradient: const LinearGradient(
-                      colors: [Colors.white, Colors.white],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    barWidth: 5,
-                    isStrokeCapRound: true,
-                    dotData: FlDotData(
-                      show: false,
-                    ),
-                    belowBarData: BarAreaData(
-                      show: false,
-                      gradient: const LinearGradient(
-                        colors: [Colors.transparent, Colors.transparent],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-            ):Container(),
-            const Spacer(
-              flex: 2,
-            ),
             Text("${widget.value} ${widget.unit}",
                 style: const TextStyle(
                     color: Colors.white,

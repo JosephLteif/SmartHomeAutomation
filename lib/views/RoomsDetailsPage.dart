@@ -37,7 +37,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
   ];
   List<String> titles = [
     "Home",
-    "Water Level",
+    "WaterLevel",
     "Temperature",
     "Security",
     "Light"

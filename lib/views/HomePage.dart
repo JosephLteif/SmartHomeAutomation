@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   ];
   List<String> titles = [
     "Home",
-    "Water Level",
+    "WaterLevel",
     "Temperature",
     "Security",
     "Light"
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     "Liters",
     "°C",
     "CCTV Cameras",
-    ""
+    "Lights"
   ];
 
   @override
@@ -172,9 +172,7 @@ class _HomePageState extends State<HomePage> {
                               value: openhabState.items
                                           .where((element) =>
                                               element.category == titles.elementAt(4).toLowerCase())
-                                              .toList()
-                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
-                                              .reduce((value, element) => value + element)
+                                              .toList().length
                                           .toString(),
                               unit: units.elementAt(4),
                               title: titles.elementAt(4),
@@ -190,15 +188,13 @@ class _HomePageState extends State<HomePage> {
                               device: "",
                               value: openhabState.items
                                           .where((element) =>
-                                              element.category == titles.elementAt(2).toLowerCase())
-                                              .toList()
-                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
-                                              .reduce((value, element) => value + element)
+                                              element.category == titles.elementAt(3).toLowerCase())
+                                              .toList().length
                                           .toString(),
-                              unit: units.elementAt(0),
-                              title: titles.elementAt(0),
-                              icon: icons.elementAt(0),
-                              color: colors.elementAt(0),
+                              unit: units.elementAt(3),
+                              title: titles.elementAt(3),
+                              icon: icons.elementAt(3),
+                              color: colors.elementAt(3),
                             ),
                           ),
                           StaggeredGridTile.count(
