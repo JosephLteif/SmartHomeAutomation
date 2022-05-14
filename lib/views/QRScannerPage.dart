@@ -30,7 +30,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
       result = scanData;
       dynamic data = jsonDecode(result!.code.toString());
       Provider.of<AddSensorState>(context, listen: false).FillFromQRCode(data);
-      dispose();
+      controller.dispose();
       Fluttertoast.showToast(
           msg: "Qr Scanned",
           toastLength: Toast.LENGTH_SHORT,

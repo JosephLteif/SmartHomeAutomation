@@ -120,6 +120,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisCellCount: 1,
                             mainAxisCellCount: 1.3,
                             child: CardElement(
+                              isRoom: true,
                               device: "Thermometer",
                               value: "24",
                               unit: "°C",
@@ -132,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisCellCount: 1,
                             mainAxisCellCount: 1.5,
                             child: CardElement(
+                              isRoom: true,
                               device: "Thermometer",
                               value: "24",
                               unit: "°C",
@@ -144,6 +146,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisCellCount: 1,
                             mainAxisCellCount: 1.5,
                             child: CardElement(
+                              isRoom: true,
                               device: "Thermometer",
                               value: "24",
                               unit: "°C",
@@ -156,6 +159,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisCellCount: 1,
                             mainAxisCellCount: 1.3,
                             child: CardElement(
+                              isRoom: true,
                               device: "Thermometer",
                               value: "24",
                               unit: "°C",

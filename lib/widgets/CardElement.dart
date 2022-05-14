@@ -13,6 +13,7 @@ class CardElement extends StatefulWidget {
   String title, unit, value, device;
   IconData icon;
   Color color;
+  bool isRoom;
 
   CardElement(
       {Key? key,
@@ -21,7 +22,8 @@ class CardElement extends StatefulWidget {
       required this.title,
       required this.unit,
       required this.value,
-      required this.device})
+      required this.device,
+      this.isRoom = false})
       : super(key: key);
 
   @override
@@ -31,9 +33,12 @@ class CardElement extends StatefulWidget {
 class _CardElementState extends State<CardElement> {
       List<ChartDataModel> dataItems = [];
       late Timer timer;
+      bool isFirstTime = true;
+      bool isDarkMode = false;
 
     init() async {
       dataItems = await Provider.of<OpenHabState>(context, listen: false).getPersistenceByName(widget.title);
+      dataItems = dataItems.isEmpty?List.generate(60, (index) => ChartDataModel(x: '0', y: 0.0)):dataItems.sublist(dataItems.length - 60);
       setState(() {
         
       });
@@ -42,23 +47,29 @@ class _CardElementState extends State<CardElement> {
     @override
     initState() {
       super.initState();
-      init();
-      timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      if(!widget.isRoom) {
         init();
-      });
+      }
     }
 
     @override
   void dispose() {
     // TODO: implement dispose
     timer.cancel();
+    super.dispose();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-        Provider.of<AppearanceState>(context, listen: false).isDarkMode;
+    if(isFirstTime){
+      timer = Timer.periodic(const Duration(seconds: 60), (timer) {
+        init();
+      });
+      isFirstTime = false;
+      isDarkMode = Provider.of<AppearanceState>(context, listen: false).isDarkMode;
+    }
+    
     return GestureDetector(
       onTap: () {
         // Navigator.of(context).push(MaterialPageRoute(
@@ -124,8 +135,8 @@ class _CardElementState extends State<CardElement> {
                         Border.all(color: const Color(0xff37434d), width: 1)),
                 minX: 0, //lowest value in the x axis
                 maxX: dataItems.length.toDouble(), //highest value in the x axis
-                minY: 0, //lowest value in the y axis
-                maxY: dataItems.reduce((current, next) => current.y > next.y ? current : next).y.toDouble() , //highest value in the y axis
+                minY: -10, //lowest value in the y axis
+                maxY: dataItems.reduce((current, next) => current.y > next.y ? current : next).y.toDouble() + 10 , //highest value in the y axis
                 lineBarsData: [
                   LineChartBarData(
                     // spots: const [

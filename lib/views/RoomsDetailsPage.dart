@@ -55,7 +55,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
   @override
   void dispose() {
     // TODO: implement dispose
-    for (var element in timers) {
+    for (Timer element in timers) {
       element.cancel();
     }
     super.dispose();
