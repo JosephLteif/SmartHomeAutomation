@@ -17,6 +17,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool didUpdate = false;
+  List<Color> colors = [
+    const Color(0xFF6f5eff),
+    const Color(0xFF14c3b5),
+    const Color(0xFFf26889),
+    const Color(0xFFe27061),
+    Color.fromARGB(255, 255, 199, 31),
+  ];
+  List<IconData> icons = [
+    Icons.home,
+    Icons.water_drop_outlined,
+    Icons.thermostat,
+    Icons.camera,
+    Icons.light
+  ];
+  List<String> titles = [
+    "Home",
+    "Water Level",
+    "Temperature",
+    "Security",
+    "Light"
+  ];
+  List<String> units = [
+    "Rooms",
+    "Liters",
+    "°C",
+    "CCTV Cameras",
+    ""
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +149,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisCellCount: 1.3,
                             child: CardElement(
                               isRoom: true,
-                              device: "Thermometer",
-                              value: "24",
-                              unit: "°C",
-                              title: "Living Room",
-                              icon: Icons.home,
-                              color: const Color(0xFF6f5eff),
+                              device: "",
+                              value: openhabState.items
+                                          .where((element) =>
+                                              element.category == titles.elementAt(2).toLowerCase())
+                                              .toList()
+                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
+                                              .reduce((value, element) => value + element)
+                                          .toString(),
+                              unit: units.elementAt(2),
+                              title: titles.elementAt(2),
+                              icon: icons.elementAt(2),
+                              color: colors.elementAt(2),
                             ),
                           ),
                           StaggeredGridTile.count(
@@ -134,12 +168,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisCellCount: 1.5,
                             child: CardElement(
                               isRoom: true,
-                              device: "Thermometer",
-                              value: "24",
-                              unit: "°C",
-                              title: "Living Room",
-                              icon: Icons.home,
-                              color: const Color(0xFF14c3b5),
+                              device: "",
+                              value: openhabState.items
+                                          .where((element) =>
+                                              element.category == titles.elementAt(4).toLowerCase())
+                                              .toList()
+                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
+                                              .reduce((value, element) => value + element)
+                                          .toString(),
+                              unit: units.elementAt(4),
+                              title: titles.elementAt(4),
+                              icon: icons.elementAt(4),
+                              color: colors.elementAt(4),
                             ),
                           ),
                           StaggeredGridTile.count(
@@ -147,12 +187,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisCellCount: 1.5,
                             child: CardElement(
                               isRoom: true,
-                              device: "Thermometer",
-                              value: "24",
-                              unit: "°C",
-                              title: "Living Room",
-                              icon: Icons.home,
-                              color: const Color(0xFFf26889),
+                              device: "",
+                              value: openhabState.items
+                                          .where((element) =>
+                                              element.category == titles.elementAt(2).toLowerCase())
+                                              .toList()
+                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
+                                              .reduce((value, element) => value + element)
+                                          .toString(),
+                              unit: units.elementAt(0),
+                              title: titles.elementAt(0),
+                              icon: icons.elementAt(0),
+                              color: colors.elementAt(0),
                             ),
                           ),
                           StaggeredGridTile.count(
@@ -160,12 +206,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisCellCount: 1.3,
                             child: CardElement(
                               isRoom: true,
-                              device: "Thermometer",
-                              value: "24",
-                              unit: "°C",
-                              title: "Living Room",
-                              icon: Icons.home,
-                              color: const Color(0xFFe27061),
+                              device: "",
+                              value: openhabState.items
+                                          .where((element) =>
+                                              element.category == titles.elementAt(2).toLowerCase())
+                                              .toList()
+                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
+                                              .reduce((value, element) => value + element)
+                                          .toString(),
+                              unit: units.elementAt(1),
+                              title: titles.elementAt(1),
+                              icon: icons.elementAt(1),
+                              color: colors.elementAt(1),
                             ),
                           ),
                         ],
