@@ -28,7 +28,14 @@ class _LoginPageState extends State<LoginPage> {
           prefs.getString(prefs_X_OPENHAB_TOKEN) == null) {
         Navigator.pushReplacementNamed(context, '/setToken');
       } else {
+        final bool? auth = prefs.getBool('authPrint');
+
+        if (auth == true) {
+          Navigator.pushReplacementNamed(context, '/authPage');
+        }
+        else {
         Navigator.pushReplacementNamed(context, '/main');
+        }
       }
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/utils/colors.dart';
+import 'package:smarthomeautomation/views/SettingsPage.dart';
 import 'HomePage.dart';
 import 'PlaceHolderPage.dart';
 import 'RoomsPage.dart';
@@ -20,7 +21,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const RoomsPage(),
     const PlaceHolderPage(),
-    const PlaceHolderPage(),
+    const SettingsPage(),
   ];
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
 import 'package:smarthomeautomation/providers/OpenHabState.dart';
 import 'package:smarthomeautomation/utils/colors.dart';

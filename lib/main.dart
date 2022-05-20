@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AddSensorState.dart';
 import 'package:smarthomeautomation/providers/AppearanceState.dart';
+import 'package:smarthomeautomation/views/FingerPrintPage.dart';
 import 'package:smarthomeautomation/views/LoginPage.dart';
 import 'package:smarthomeautomation/views/QRScannerPage.dart';
 import 'package:smarthomeautomation/views/SetTokenPage.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
                   '/main': (context) => const MainPage(),
                   '/setToken': (context) => SetTokenPage(),
                   '/qrscanner': (context) => QRScannerPage(),
+                  '/authPage':(context) => const FingerPrintPage(),
                 },
               )),
         ));
