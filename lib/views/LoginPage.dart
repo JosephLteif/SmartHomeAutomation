@@ -32,9 +32,8 @@ class _LoginPageState extends State<LoginPage> {
 
         if (auth == true) {
           Navigator.pushReplacementNamed(context, '/authPage');
-        }
-        else {
-        Navigator.pushReplacementNamed(context, '/main');
+        } else {
+          Navigator.pushReplacementNamed(context, '/main');
         }
       }
     }

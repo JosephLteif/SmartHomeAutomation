@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../services/FingerPrint.dart';
 
-
 class FingerPrintPage extends StatefulWidget {
   const FingerPrintPage({Key? key}) : super(key: key);
 
@@ -19,8 +18,7 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
   init() async {
     bool auth = await LocalAuthApi.authenticate();
 
-    if(auth == true)
-    {
+    if (auth == true) {
       Iconcolor = Colors.green;
       Fluttertoast.showToast(msg: 'Authenticated');
       Future.delayed(const Duration(seconds: 1), () {
@@ -33,9 +31,7 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
         exit(0);
       });
     }
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -47,7 +43,13 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Icon(Icons.fingerprint, size: 128, color: Iconcolor,),),
+      body: Center(
+        child: Icon(
+          Icons.fingerprint,
+          size: 128,
+          color: Iconcolor,
+        ),
+      ),
     );
   }
 }

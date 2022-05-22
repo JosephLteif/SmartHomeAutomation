@@ -193,12 +193,11 @@ class OpenHabService {
     }
   }
 
-    Future<List<ChartDataModel>> getPersistenceByName(String itemName) async {
-      List<ChartDataModel> chartData = [];
+  Future<List<ChartDataModel>> getPersistenceByName(String itemName) async {
+    List<ChartDataModel> chartData = [];
     try {
-      d.Response response = await dio.get(
-        persistenceEndpoint.replaceAll('{itemname}', itemName)
-      );
+      d.Response response =
+          await dio.get(persistenceEndpoint.replaceAll('{itemname}', itemName));
       if (response.statusCode == 200) {
         for (var item in response.data['data']) {
           chartData.add(ChartDataModel.fromJson(item));

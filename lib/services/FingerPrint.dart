@@ -13,10 +13,10 @@ class LocalAuthApi {
   }
 
   static Future<bool> authenticateIsAvailable() async {
-  final isAvailable = await _auth.canCheckBiometrics;
-  final isDeviceSupported = await _auth.isDeviceSupported(); 
-  return isAvailable && isDeviceSupported;
-}
+    final isAvailable = await _auth.canCheckBiometrics;
+    final isDeviceSupported = await _auth.isDeviceSupported();
+    return isAvailable && isDeviceSupported;
+  }
 
   static Future<List<BiometricType>> getBiometrics() async {
     try {

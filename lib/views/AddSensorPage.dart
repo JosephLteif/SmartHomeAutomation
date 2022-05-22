@@ -1,4 +1,3 @@
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/providers/AddSensorState.dart';
@@ -123,88 +122,85 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                             children: [
                               const Text("Existing room"),
                               Radio<bool>(
-                            value: radioButtonValue,
-                            groupValue: true,
-                            onChanged: (value){
-                            setState(() {
-                              radioButtonValue = !radioButtonValue;
-                            });
-                          }
-                          ),
-                          const Spacer(),
-                          const Text("New room"),
-                          Radio<bool>(
-                            value: !radioButtonValue,
-                            groupValue: true,
-                            onChanged: (value){
-                            setState(() {
-                              radioButtonValue = !radioButtonValue;
-                            });
-                          }
-                          ),
+                                  value: radioButtonValue,
+                                  groupValue: true,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      radioButtonValue = !radioButtonValue;
+                                    });
+                                  }),
+                              const Spacer(),
+                              const Text("New room"),
+                              Radio<bool>(
+                                  value: !radioButtonValue,
+                                  groupValue: true,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      radioButtonValue = !radioButtonValue;
+                                    });
+                                  }),
                             ],
                           ),
                           const SizedBox(height: 16),
-                          radioButtonValue?DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: appearanceState.isDarkMode
-                                        ? const Color.fromRGBO(
-                                            51, 255, 236, 1)
-                                        : const Color.fromRGBO(
-                                            118, 98, 255, 1),
+                          radioButtonValue
+                              ? DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: appearanceState.isDarkMode
+                                              ? const Color.fromRGBO(
+                                                  51, 255, 236, 1)
+                                              : const Color.fromRGBO(
+                                                  118, 98, 255, 1),
+                                        ),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(8)),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            validator: (value) =>
-                                value == null ? "Select a Room" : null,
-                            value: selectedRoom,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedRoom = newValue!;
-                              });
-                            },
-                            items: openhabState.rooms.map((String value) {
-                              return DropdownMenuItem(
-                                value: value.toString(),
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ):
-                          TextFormField(
-                            controller: locationController,
-                            keyboardType: TextInputType.emailAddress,
-                            keyboardAppearance: appearanceState.isDarkMode
-                                ? Brightness.dark
-                                : Brightness.light,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              label: const Text('Room'),
-                              hintText: 'TempSensor',
-                            ),
-                            validator: (Label) {
-                              if (Label!.isEmpty) {
-                                return null;
-                              }
-                              return 'Invalid Label';
-                            },
-                          ),
+                                  validator: (value) =>
+                                      value == null ? "Select a Room" : null,
+                                  value: selectedRoom,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedRoom = newValue!;
+                                    });
+                                  },
+                                  items: openhabState.rooms.map((String value) {
+                                    return DropdownMenuItem(
+                                      value: value.toString(),
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                )
+                              : TextFormField(
+                                  controller: locationController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardAppearance: appearanceState.isDarkMode
+                                      ? Brightness.dark
+                                      : Brightness.light,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    label: const Text('Room'),
+                                    hintText: 'TempSensor',
+                                  ),
+                                  validator: (Label) {
+                                    if (Label!.isEmpty) {
+                                      return null;
+                                    }
+                                    return 'Invalid Label';
+                                  },
+                                ),
                           const SizedBox(height: 16),
                           DropdownButtonFormField(
                             decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: appearanceState.isDarkMode
-                                        ? const Color.fromRGBO(
-                                            51, 255, 236, 1)
-                                        : const Color.fromRGBO(
-                                            118, 98, 255, 1),
+                                        ? const Color.fromRGBO(51, 255, 236, 1)
+                                        : const Color.fromRGBO(118, 98, 255, 1),
                                   ),
                                   borderRadius: BorderRadius.circular(8)),
                               border: OutlineInputBorder(
@@ -217,8 +213,13 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                 selectedValue = newValue!;
                               });
                             },
-                            items: <String>['Temperature', 'Water', 'Infrared', 'Sound', 'Light']
-                                .map((String value) {
+                            items: <String>[
+                              'Temperature',
+                              'Water',
+                              'Infrared',
+                              'Sound',
+                              'Light'
+                            ].map((String value) {
                               return DropdownMenuItem(
                                 value: value.toString(),
                                 child: Text(value),
@@ -235,12 +236,12 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     FocusScope.of(context).unfocus();
-                                    sensor.Label =
-                                        addSensorState.getLabel();
-                                    sensor.Topic =
-                                        addSensorState.getTopic();
+                                    sensor.Label = addSensorState.getLabel();
+                                    sensor.Topic = addSensorState.getTopic();
                                     sensor.Type = selectedValue;
-                                    sensor.Location = radioButtonValue?selectedRoom:locationController.text.toString();
+                                    sensor.Location = radioButtonValue
+                                        ? selectedRoom
+                                        : locationController.text.toString();
                                     if (await OpenHabService()
                                         .createProcess(sensor)) {
                                       openhabState.update();

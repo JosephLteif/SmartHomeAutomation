@@ -27,47 +27,48 @@ class CardElement extends StatefulWidget {
 }
 
 class _CardElementState extends State<CardElement> {
-      List<ChartDataModel> dataItems = [];
-      late Timer timer;
-      bool isFirstTime = true;
-      bool isDarkMode = false;
+  List<ChartDataModel> dataItems = [];
+  late Timer timer;
+  bool isFirstTime = true;
+  bool isDarkMode = false;
 
-    init() async {
-      dataItems = await Provider.of<OpenHabState>(context, listen: false).getPersistenceByName(widget.title);
-      dataItems = dataItems.isEmpty?List.generate(60, (index) => ChartDataModel(x: '0', y: 0.0)):dataItems.sublist(dataItems.length - 60);
-      setState(() {
-        
-      });
+  init() async {
+    dataItems = await Provider.of<OpenHabState>(context, listen: false)
+        .getPersistenceByName(widget.title);
+    dataItems = dataItems.isEmpty
+        ? List.generate(60, (index) => ChartDataModel(x: '0', y: 0.0))
+        : dataItems.sublist(dataItems.length - 60);
+    setState(() {});
+  }
+
+  @override
+  initState() {
+    super.initState();
+    if (!widget.isRoom) {
+      init();
     }
+  }
 
-    @override
-    initState() {
-      super.initState();
-      if(!widget.isRoom) {
-        init();
-      }
-    }
-
-    @override
+  @override
   void dispose() {
     // TODO: implement dispose
     timer.cancel();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    if(isFirstTime){
-      if(!widget.isRoom) {
+    if (isFirstTime) {
+      if (!widget.isRoom) {
         timer = Timer.periodic(const Duration(seconds: 5), (timer) {
           init();
         });
       }
       isFirstTime = false;
-      isDarkMode = Provider.of<AppearanceState>(context, listen: false).isDarkMode;
+      isDarkMode =
+          Provider.of<AppearanceState>(context, listen: false).isDarkMode;
     }
-    
+
     return GestureDetector(
       onTap: () {
         // Navigator.of(context).push(MaterialPageRoute(
@@ -120,32 +121,54 @@ class _CardElementState extends State<CardElement> {
             const Spacer(
               flex: 1,
             ),
-            if(widget.isRoom)
-              if(widget.title == 'Temperature' || widget.device == 'Temperature')
+            if (widget.isRoom)
+              if (widget.title == 'Temperature' ||
+                  widget.device == 'Temperature')
                 Expanded(
-                  child:
-                  Center(
-                    child: 
-                      double.parse(widget.value) > 30 ?
-                      const Icon(Icons.sunny, size: 50, color: Colors.white,) : 
-                      double.parse(widget.value) < 23 ? 
-                      const Icon(Icons.cloudy_snowing, size: 50, color: Colors.white,): 
-                      const Icon(Icons.cloud, size: 50, color: Colors.white,)
-                  )
-                )
-                else if(widget.title == 'Light' || widget.device == 'Light')
-                 GridView.builder(
-                   shrinkWrap: true,
-                   itemCount: int.parse(widget.value),
-                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.light, color: Colors.white,))
-                else if(widget.title == 'Security' || widget.device == 'Security')
-                 GridView.builder(
-                   shrinkWrap: true,
-                   itemCount: int.parse(widget.value),
-                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.camera, color: Colors.white,)),
-                const Spacer(
-                  flex: 2,
-                ),
+                    child: Center(
+                        child: double.parse(widget.value) > 30
+                            ? const Icon(
+                                Icons.sunny,
+                                size: 50,
+                                color: Colors.white,
+                              )
+                            : double.parse(widget.value) < 23
+                                ? const Icon(
+                                    Icons.cloudy_snowing,
+                                    size: 50,
+                                    color: Colors.white,
+                                  )
+                                : const Icon(
+                                    Icons.cloud,
+                                    size: 50,
+                                    color: Colors.white,
+                                  )))
+              else if (widget.title == 'Light' || widget.device == 'Light')
+                GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: int.parse(widget.value),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5),
+                    itemBuilder: (context, index) => const Icon(
+                          Icons.light,
+                          color: Colors.white,
+                        ))
+              else if (widget.title == 'Security' ||
+                  widget.device == 'Security')
+                GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: int.parse(widget.value),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5),
+                    itemBuilder: (context, index) => const Icon(
+                          Icons.camera,
+                          color: Colors.white,
+                        )),
+            const Spacer(
+              flex: 2,
+            ),
             Text("${widget.value} ${widget.unit}",
                 style: const TextStyle(
                     color: Colors.white,

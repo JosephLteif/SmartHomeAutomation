@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                   '/main': (context) => const MainPage(),
                   '/setToken': (context) => SetTokenPage(),
                   '/qrscanner': (context) => QRScannerPage(),
-                  '/authPage':(context) => const FingerPrintPage(),
+                  '/authPage': (context) => const FingerPrintPage(),
                 },
               )),
         ));

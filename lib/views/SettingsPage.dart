@@ -16,14 +16,15 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool selectedValue = false;
-  
+
   init() async {
     final prefs = await SharedPreferences.getInstance();
     final bool? repeat = prefs.getBool('authPrint');
     setState(() {
-                  selectedValue = repeat == true ? true : false;
-                });
+      selectedValue = repeat == true ? true : false;
+    });
   }
+
   @override
   void initState() {
     init();
@@ -42,15 +43,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     final prefs = await SharedPreferences.getInstance();
-          
+
                     bool auth = await LocalAuthApi.authenticateIsAvailable();
-          
-                    if(auth) {
+
+                    if (auth) {
                       await prefs.setBool('authPrint', !(selectedValue));
                       prefs.commit();
                     }
-                      
-                    print(auth);
+
                     setState(() {
                       selectedValue = !(selectedValue);
                     });
@@ -64,7 +64,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     appearanceState.toggleDarkMode();
                   },
                   initialValue: appearanceState.isDarkMode,
-                  leading: appearanceState.isDarkMode?const Icon(Icons.dark_mode):const Icon(Icons.light_mode),
+                  leading: appearanceState.isDarkMode
+                      ? const Icon(Icons.dark_mode)
+                      : const Icon(Icons.light_mode),
                   title: const Text('Set Theme'),
                 ),
               ],
@@ -73,6 +75,5 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
-
   }
 }

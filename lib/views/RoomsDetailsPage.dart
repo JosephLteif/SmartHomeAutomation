@@ -42,13 +42,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
     "Security",
     "Light"
   ];
-  List<String> units = [
-    "Rooms",
-    "Liters",
-    "°C",
-    "CCTV Cameras",
-    ""
-  ];
+  List<String> units = ["Rooms", "Liters", "°C", "CCTV Cameras", ""];
 
   List<Timer> timers = [];
 
@@ -203,15 +197,16 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                             int number;
                             bool canSendData = false;
                             switch (openhabState.items
-                                          .firstWhere((element) =>
-                                              element.name.toString() ==
-                                              openhabState.selectedThings
-                                                  .elementAt(index)
-                                                  .channels!
-                                                  .first
-                                                  .linkedItems
-                                                  .first
-                                                  .toString()).category) {
+                                .firstWhere((element) =>
+                                    element.name.toString() ==
+                                    openhabState.selectedThings
+                                        .elementAt(index)
+                                        .channels!
+                                        .first
+                                        .linkedItems
+                                        .first
+                                        .toString())
+                                .category) {
                               case 'temperature':
                                 number = 2;
                                 canSendData = true;
@@ -263,30 +258,34 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                                           .state
                                           .toString(),
                                       device: titles[number]),
-                                  canSendData?Switch(
-                                      value: tempbool,
-                                      onChanged: (value) {
-                                        tempbool = value;
-                                        if (tempbool) {
-                                          openhabState.publishMessage(
-                                              openhabState.selectedThings
-                                                  .elementAt(index)
-                                                  .channels!
-                                                  .first
-                                                  .configuration['stateTopic']
-                                                  .toString(),
-                                              "U");
-                                        } else {
-                                          openhabState.publishMessage(
-                                              openhabState.selectedThings
-                                                  .elementAt(index)
-                                                  .channels!
-                                                  .first
-                                                  .configuration['stateTopic']
-                                                  .toString(),
-                                              "D");
-                                        }
-                                      }):Container(),
+                                  canSendData
+                                      ? Switch(
+                                          value: tempbool,
+                                          onChanged: (value) {
+                                            tempbool = value;
+                                            if (tempbool) {
+                                              openhabState.publishMessage(
+                                                  openhabState.selectedThings
+                                                      .elementAt(index)
+                                                      .channels!
+                                                      .first
+                                                      .configuration[
+                                                          'stateTopic']
+                                                      .toString(),
+                                                  "U");
+                                            } else {
+                                              openhabState.publishMessage(
+                                                  openhabState.selectedThings
+                                                      .elementAt(index)
+                                                      .channels!
+                                                      .first
+                                                      .configuration[
+                                                          'stateTopic']
+                                                      .toString(),
+                                                  "D");
+                                            }
+                                          })
+                                      : Container(),
                                 ],
                               ),
                             );

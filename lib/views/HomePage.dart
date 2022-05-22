@@ -39,13 +39,7 @@ class _HomePageState extends State<HomePage> {
     "Security",
     "Light"
   ];
-  List<String> units = [
-    "Rooms",
-    "Liters",
-    "°C",
-    "CCTV Cameras",
-    "Lights"
-  ];
+  List<String> units = ["Rooms", "Liters", "°C", "CCTV Cameras", "Lights"];
 
   @override
   Widget build(BuildContext context) {
@@ -151,13 +145,20 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items.isEmpty?'0': openhabState.items
-                                          .where((element) =>
-                                              element.category == titles.elementAt(2).toLowerCase())
-                                              .toList()
-                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
-                                              .reduce((value, element) => value + element)
-                                          .toString(),
+                              value: openhabState.items.isEmpty
+                                  ? '0'
+                                  : openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(2).toLowerCase())
+                                      .toList()
+                                      .map((e) => double.parse(
+                                          e.state.toString() == "NULL"
+                                              ? '0'
+                                              : e.state.toString()))
+                                      .reduce(
+                                          (value, element) => value + element)
+                                      .toString(),
                               unit: units.elementAt(2),
                               title: titles.elementAt(2),
                               icon: icons.elementAt(2),
@@ -170,11 +171,15 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items.isEmpty?'0': openhabState.items
-                                          .where((element) =>
-                                              element.category == titles.elementAt(4).toLowerCase())
-                                              .toList().length
-                                          .toString(),
+                              value: openhabState.items.isEmpty
+                                  ? '0'
+                                  : openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(4).toLowerCase())
+                                      .toList()
+                                      .length
+                                      .toString(),
                               unit: units.elementAt(4),
                               title: titles.elementAt(4),
                               icon: icons.elementAt(4),
@@ -187,11 +192,15 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items.isEmpty?'0': openhabState.items
-                                          .where((element) =>
-                                              element.category == titles.elementAt(3).toLowerCase())
-                                              .toList().length
-                                          .toString(),
+                              value: openhabState.items.isEmpty
+                                  ? '0'
+                                  : openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(3).toLowerCase())
+                                      .toList()
+                                      .length
+                                      .toString(),
                               unit: units.elementAt(3),
                               title: titles.elementAt(3),
                               icon: icons.elementAt(3),
@@ -204,13 +213,20 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items.isEmpty?'0': openhabState.items
-                                          .where((element) =>
-                                              element.category == titles.elementAt(2).toLowerCase())
-                                              .toList()
-                                              .map((e) => double.parse(e.state.toString()=="NULL"?'0':e.state.toString()))
-                                              .reduce((value, element) => value + element)
-                                          .toString(),
+                              value: openhabState.items.isEmpty
+                                  ? '0'
+                                  : openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(2).toLowerCase())
+                                      .toList()
+                                      .map((e) => double.parse(
+                                          e.state.toString() == "NULL"
+                                              ? '0'
+                                              : e.state.toString()))
+                                      .reduce(
+                                          (value, element) => value + element)
+                                      .toString(),
                               unit: units.elementAt(1),
                               title: titles.elementAt(1),
                               icon: icons.elementAt(1),
