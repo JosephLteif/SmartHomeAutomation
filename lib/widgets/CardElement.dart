@@ -60,7 +60,7 @@ class _CardElementState extends State<CardElement> {
   Widget build(BuildContext context) {
     if (isFirstTime) {
       if (!widget.isRoom) {
-        timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+        timer = Timer.periodic(Duration(seconds: Provider.of<OpenHabState>(context).RefreshRate), (timer) {
           init();
         });
       }

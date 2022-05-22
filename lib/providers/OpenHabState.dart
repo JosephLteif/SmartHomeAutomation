@@ -8,6 +8,8 @@ import 'package:smarthomeautomation/models/ThingModel.dart';
 import 'package:smarthomeautomation/services/OpenHabService.dart';
 
 class OpenHabState extends ChangeNotifier {
+  int RefreshRate = 5;
+
   List<Thing> _things = [];
   List<Thing> get things => _things;
 
@@ -31,6 +33,11 @@ class OpenHabState extends ChangeNotifier {
   update() {
     Fetchthings();
     Fetchitems();
+  }
+
+  setRefreshRate(int? value) {
+    RefreshRate = value!;
+    notifyListeners();
   }
 
   void Fetchthings() async {

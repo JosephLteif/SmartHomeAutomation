@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smarthomeautomation/providers/OpenHabState.dart';
 
 import '../providers/AppearanceState.dart';
 import '../services/FingerPrint.dart';
@@ -64,6 +65,31 @@ class _SettingsPageState extends State<SettingsPage> {
                     appearanceState.toggleDarkMode();
                   },
                   initialValue: appearanceState.isDarkMode,
+                  leading: appearanceState.isDarkMode
+                      ? const Icon(Icons.dark_mode)
+                      : const Icon(Icons.light_mode),
+                  title: const Text('Set Theme'),
+                ),
+                SettingsTile.navigation(
+                  trailing: SizedBox(
+                    height: 40,
+                    child: DropdownButton(
+                              value: Provider.of<OpenHabState>(context).RefreshRate,
+                              onChanged: (int? newValue) {
+                                Provider.of<OpenHabState>(context, listen: false).setRefreshRate(newValue);
+                              },
+                              items: <int>[
+                                5,
+                                10,
+                                15
+                              ].map((int value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.toString()),
+                                );
+                              }).toList(),
+                            ),
+                  ),
                   leading: appearanceState.isDarkMode
                       ? const Icon(Icons.dark_mode)
                       : const Icon(Icons.light_mode),
