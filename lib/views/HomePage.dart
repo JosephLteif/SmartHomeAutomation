@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items
+                              value: openhabState.items.isEmpty?'0': openhabState.items
                                           .where((element) =>
                                               element.category == titles.elementAt(2).toLowerCase())
                                               .toList()
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items
+                              value: openhabState.items.isEmpty?'0': openhabState.items
                                           .where((element) =>
                                               element.category == titles.elementAt(4).toLowerCase())
                                               .toList().length
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items
+                              value: openhabState.items.isEmpty?'0': openhabState.items
                                           .where((element) =>
                                               element.category == titles.elementAt(3).toLowerCase())
                                               .toList().length
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                             child: CardElement(
                               isRoom: true,
                               device: "",
-                              value: openhabState.items
+                              value: openhabState.items.isEmpty?'0': openhabState.items
                                           .where((element) =>
                                               element.category == titles.elementAt(2).toLowerCase())
                                               .toList()

@@ -127,22 +127,22 @@ class _CardElementState extends State<CardElement> {
                   Center(
                     child: 
                       double.parse(widget.value) > 30 ?
-                      const Icon(Icons.sunny, size: 50,) : 
+                      const Icon(Icons.sunny, size: 50, color: Colors.white,) : 
                       double.parse(widget.value) < 23 ? 
-                      const Icon(Icons.cloudy_snowing, size: 50,): 
-                      const Icon(Icons.cloud, size: 50,)
+                      const Icon(Icons.cloudy_snowing, size: 50, color: Colors.white,): 
+                      const Icon(Icons.cloud, size: 50, color: Colors.white,)
                   )
                 )
                 else if(widget.title == 'Light' || widget.device == 'Light')
                  GridView.builder(
                    shrinkWrap: true,
                    itemCount: int.parse(widget.value),
-                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.light))
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.light, color: Colors.white,))
                 else if(widget.title == 'Security' || widget.device == 'Security')
                  GridView.builder(
                    shrinkWrap: true,
                    itemCount: int.parse(widget.value),
-                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.camera)),
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5), itemBuilder: (context, index) => const Icon(Icons.camera, color: Colors.white,)),
                 const Spacer(
                   flex: 2,
                 ),
