@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bar_chart_sharp),
+                  icon: Icon(Icons.settings),
                   label: '',
                 ),
               ],

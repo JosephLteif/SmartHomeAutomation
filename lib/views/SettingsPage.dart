@@ -32,34 +32,46 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsList(
-      sections: [
-        SettingsSection(
-          title: Text('Settings'),
-          tiles: <SettingsTile>[
-            SettingsTile.switchTile(
-              onToggle: (value) async {
-                final prefs = await SharedPreferences.getInstance();
-
-                bool auth = await LocalAuthApi.authenticateIsAvailable();
-
-                if(auth) {
-                  await prefs.setBool('authPrint', !(selectedValue));
-                  prefs.commit();
-                }
-                  
-                print(auth);
-                setState(() {
-                  selectedValue = !(selectedValue);
-                });
-              },
-              initialValue: selectedValue,
-              leading: Icon(Icons.fingerprint),
-              title: Text('Enable fingerPrint'),
+    return Consumer<AppearanceState>(
+      builder: (context, appearanceState, child) => SafeArea(
+        child: SettingsList(
+          sections: [
+            SettingsSection(
+              title: const Text('Settings'),
+              tiles: <SettingsTile>[
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    final prefs = await SharedPreferences.getInstance();
+          
+                    bool auth = await LocalAuthApi.authenticateIsAvailable();
+          
+                    if(auth) {
+                      await prefs.setBool('authPrint', !(selectedValue));
+                      prefs.commit();
+                    }
+                      
+                    print(auth);
+                    setState(() {
+                      selectedValue = !(selectedValue);
+                    });
+                  },
+                  initialValue: selectedValue,
+                  leading: const Icon(Icons.fingerprint),
+                  title: const Text('Enable fingerPrint'),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    appearanceState.toggleDarkMode();
+                  },
+                  initialValue: appearanceState.isDarkMode,
+                  leading: appearanceState.isDarkMode?const Icon(Icons.dark_mode):const Icon(Icons.light_mode),
+                  title: const Text('Set Theme'),
+                ),
+              ],
             ),
           ],
         ),
-      ],
+      ),
     );
 
   }
