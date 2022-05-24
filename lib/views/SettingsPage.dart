@@ -90,10 +90,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               }).toList(),
                             ),
                   ),
-                  leading: appearanceState.isDarkMode
-                      ? const Icon(Icons.dark_mode)
-                      : const Icon(Icons.light_mode),
-                  title: const Text('Set Theme'),
+                  leading: const Icon(Icons.monitor),
+                  title: const Text('Set Refresh Rate'),
                 ),
               ],
             ),
