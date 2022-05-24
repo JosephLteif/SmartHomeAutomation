@@ -191,6 +191,7 @@ class _CardElementState extends State<CardElement> {
                       style: const TextStyle(color: Colors.white)),
                 widget.canSendData ?
                   Switch(
+                    activeColor: Colors.white,
                       value: tempbool,
                       onChanged: (value) {
                         tempbool = value;
