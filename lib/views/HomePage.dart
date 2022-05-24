@@ -151,6 +151,10 @@ class _HomePageState extends State<HomePage> {
                                       .where((element) =>
                                           element.category ==
                                           titles.elementAt(2).toLowerCase())
+                                      .toList().isEmpty?'0':openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(2).toLowerCase())
                                       .toList()
                                       .map((e) => double.parse(
                                           e.state.toString() == "NULL"
@@ -216,6 +220,12 @@ class _HomePageState extends State<HomePage> {
                               value: openhabState.items.isEmpty
                                   ? '0'
                                   : openhabState.items
+                                      .where((element) =>
+                                          element.category ==
+                                          titles.elementAt(2).toLowerCase())
+                                      .toList().isEmpty?
+                                      '0'.toString():
+                                      openhabState.items
                                       .where((element) =>
                                           element.category ==
                                           titles.elementAt(2).toLowerCase())
