@@ -55,6 +55,7 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
     super.dispose();
   }
 
+  bool tempbool = false;
   bool isFirstTime = true;
   @override
   Widget build(BuildContext context) {
@@ -232,7 +233,6 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                               isFirstTime = false;
                             }
 
-                            bool tempbool = false;
                             return Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Column(
@@ -240,6 +240,13 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                                   CardElement(
                                       color: colors[number],
                                       icon: icons[number],
+                                      canSendData: canSendData,
+                                      topic: openhabState.selectedThings
+                                          .elementAt(index)
+                                          .channels!
+                                          .first
+                                          .configuration['stateTopic']
+                                          .toString(),
                                       title: openhabState.selectedThings
                                           .elementAt(index)
                                           .label
@@ -258,34 +265,6 @@ class _RoomsDetailsPageState extends State<RoomsDetailsPage> {
                                           .state
                                           .toString(),
                                       device: titles[number]),
-                                  canSendData
-                                      ? Switch(
-                                          value: tempbool,
-                                          onChanged: (value) {
-                                            tempbool = value;
-                                            if (tempbool) {
-                                              openhabState.publishMessage(
-                                                  openhabState.selectedThings
-                                                      .elementAt(index)
-                                                      .channels!
-                                                      .first
-                                                      .configuration[
-                                                          'stateTopic']
-                                                      .toString(),
-                                                  "U");
-                                            } else {
-                                              openhabState.publishMessage(
-                                                  openhabState.selectedThings
-                                                      .elementAt(index)
-                                                      .channels!
-                                                      .first
-                                                      .configuration[
-                                                          'stateTopic']
-                                                      .toString(),
-                                                  "D");
-                                            }
-                                          })
-                                      : Container(),
                                 ],
                               ),
                             );
