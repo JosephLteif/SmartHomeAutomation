@@ -107,6 +107,7 @@ class OpenHabState extends ChangeNotifier {
     client.pongCallback = pong;
     client.onUnsubscribed = onUnsubscribed;
     client.autoReconnect = false;
+    client.keepAlivePeriod = 99999999;
 
     final connMessage = MqttConnectMessage()
         .authenticateAs("joe", "123")

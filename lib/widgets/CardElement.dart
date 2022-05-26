@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smarthomeautomation/models/ChartDataModel.dart';
@@ -32,18 +33,21 @@ class CardElement extends StatefulWidget {
 }
 
 class _CardElementState extends State<CardElement> {
-  List<ChartDataModel> dataItems = [];
+  List<ChartDataModel> dataItems = List.generate(60, (index) => ChartDataModel(x: '0', y: 0.0));
   late Timer timer;
   bool isFirstTime = true;
   bool isDarkMode = false;
   bool tempbool = false;
+  double maxy = 0.0;
 
   init() async {
     dataItems = await Provider.of<OpenHabState>(context, listen: false)
         .getPersistenceByName(widget.title);
     dataItems = dataItems.isEmpty
         ? List.generate(60, (index) => ChartDataModel(x: '0', y: 0.0))
-        : dataItems.sublist(dataItems.length - 60);
+        : dataItems.length<60?dataItems:dataItems.sublist(dataItems.length);
+    maxy = dataItems.reduce((current, next) => current.y > next.y ? current : next).y.toDouble() + 2;
+        print(maxy);
     setState(() {});
   }
 
@@ -74,6 +78,8 @@ class _CardElementState extends State<CardElement> {
       isFirstTime = false;
       isDarkMode =
           Provider.of<AppearanceState>(context, listen: false).isDarkMode;
+          
+      tempbool = double.parse(widget.value) !=0.0?true:false;
     }
 
     return Consumer<OpenHabState>(
@@ -84,7 +90,7 @@ class _CardElementState extends State<CardElement> {
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          height: 150,
+          height: 180,
           width: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -126,8 +132,48 @@ class _CardElementState extends State<CardElement> {
                   Icon(widget.icon, color: Colors.white)
                 ],
               ),
-              const Spacer(
-                flex: 1,
+              if (!widget.isRoom)
+                Flexible(
+                child: LineChart(LineChartData(
+                  gridData: FlGridData(show: false),
+                  titlesData: FlTitlesData(
+                    show: false,
+                  ),
+                  borderData: FlBorderData(
+                      show: false,
+                      border:
+                          Border.all(color: const Color(0xff37434d), width: 1)),
+                  minX: 0, //lowest value in the x axis
+                  maxX: dataItems.length.toDouble(), //highest value in the x axis
+                  minY: 0, //lowest value in the y axis
+                  maxY: maxy , //highest value in the y axis
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: dataItems
+                          .map((e) => FlSpot(dataItems.indexOf(e).toDouble(), e.y))
+                          .toList(),
+                      isCurved: true,
+                      gradient: const LinearGradient(
+                        colors: [Colors.white, Colors.white],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      barWidth: 5,
+                      isStrokeCapRound: true,
+                      dotData: FlDotData(
+                        show: false,
+                      ),
+                      belowBarData: BarAreaData(
+                        show: false,
+                        gradient: const LinearGradient(
+                          colors: [Colors.transparent, Colors.transparent],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
               ),
               if (widget.isRoom)
                 if (widget.title == 'Temperature' ||
